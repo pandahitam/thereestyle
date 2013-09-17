@@ -1,0 +1,14 @@
+/* category.tpl */
+body#category #subcategories li { height: 136px; width: 108px; margin-right: 3px }
+div.cat_desc { margin:0.5em 0; float: none;max-width: 360px;text-align: justify; }
+body#category div#subcategories .inline_list a img { display: inline }
+#category img#categoryImage { margin-top: 1em; max-width: 430px; }
+.logoDesigner{
+	float: right;
+	max-width: 400px;
+	border-bottom: 1px solid #999;
+	border-top: 1px solid #999;
+	margin-left: 10px;
+}
+.desainerdetail{font-size:15px;}
+.rightPagination{float:right;}

@@ -1,0 +1,53 @@
+@font-face{
+    font-family: trajanpro-bold;
+    src:url('TrajanPro-Bold.ttf');
+}
+
+@font-face{
+    font-family: trajanpro-regular;
+    src:url('TrajanPro-Regular.ttf');
+}
+
+@font-face{
+    font-family: zapfino;
+    src:url('Zapfino.ttf');
+}
+
+#welcome{
+    text-align: center;
+    font-family: zapfino;
+    margin-bottom:10px;
+}
+#tagline{
+    font-family:helvetica;
+    text-align: center;
+    font-size:12px;
+}
+
+#content{
+    margin:0 auto;
+    display: block;
+    width:980px;
+}
+#content ul li{
+    float: left;
+    list-style: none;
+    margin-right:10px;
+}
+
+.span-1 ul li{
+    list-style: none;
+    
+}
+
+.span-2 ul li{
+    list-style: none;
+    
+}
+
+#footer{
+    clear:both;
+}
+#stylista{background: url(../img/gambar1.png)no-repeat;}
+#budget{background: url(../img/gambar2.png)no-repeat;}
+#living{background: url(../img/gambar3.png)no-repeat;}
