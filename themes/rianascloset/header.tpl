@@ -101,17 +101,16 @@
 			
 		<div id="page">
 			<div id="headershadow"></div>
-			<div id="headerbottom">
-				
-			</div>
-			
+			<div id="headerbottom"></div>		
 			<div class="clear"></div>
 			
 			<div id="columns">
 				<!-- Left -->
+				{if $page_name != 'cms'}
 				<div id="left_column" class="column">
 					{$HOOK_LEFT_COLUMN}
 				</div>
+				{/if}
 
 				<!-- Center -->
 				<div id="center_column" style=" {if $page_name == 'main' || $page_name == 'order-opc' || $page_name == 'details' || $page_name == 'cms'}width: 980px;{/if}">
