@@ -908,10 +908,6 @@ ul#order_step { background-color: white }
 }
 #socmed{
     float:right;
-    margin-left:5px;
-    /*width: 205px;*/
-   margin-top: 80px;
-		clear: right;
 }
 
 #socmed ul li{
@@ -947,9 +943,7 @@ ul#order_step { background-color: white }
     color:#FFFFFF;
 }
 
-#footertag{
-    padding-top:10px;
-}
+#footertag{ padding-top:10px; width: 980px; margin: 0 auto; }
 
 #copyright{
     font-family:helvetica;
@@ -1785,18 +1779,15 @@ input:-ms-placeholder { color:#a8a8a8; font-style: italic; }
 	min-height: 710px;
 	margin-top: 50px;
 }
-#homepicfour1{
-    background: url('../img/homepic1.jpg');
-}
-#homepicfour2{
-    background: url('../img/homepic2.jpg');
-}
-#homepicfour3{
-    background: url('../img/homepic3.jpg');
-}
-#homepicfour4{
-    background: url('../img/homepic4.jpg');
-}
+
+#homepic .homepicfour { width: 216px; height: 312px; float:left; margin-right:38px; }
+#homepic .big-circle { margin: 100px auto; }
+#homepic .small-circle { margin-top: 15px; margin-left: 15px; }
+#homepic #homepicfour1 { background: url('../img/homepic1.jpg'); }
+#homepic #homepicfour2 { background: url('../img/homepic2.jpg'); }
+#homepic #homepicfour3 { background: url('../img/homepic3.jpg'); }
+#homepic #homepicfour4 { background: url('../img/homepic4.jpg'); margin-right: 0; }
+
 .homepicfour{
 	width: 216px;
 	height: 312px;
@@ -1897,9 +1888,21 @@ form.stdcontact fieldset label{
 }
 .newsletter{
 	float: left;
+	/*
 	margin-top: 15px;
 	margin-left: 40px;
+	*/
 	color: #5D717E;
+}
+.newsletter input { margin-left: 0; }
+#newsletter_block_left{
+	/* 
+	clear: both;
+	margin-left: 482px;
+	position: absolute;
+	background: none;
+	margin-top: 30px; 
+	*/
 }
 
 #header a{
@@ -1995,12 +1998,15 @@ form.stdcontact fieldset label{
 	margin-top: -63px;
 	margin-left: 35px;
 }
+
+/* INTRODUCTION */
 #introheader{
 	font-size: 32px;
 	font-family: trajanpro-regular;
 	color: white;
 	letter-spacing: 2px;
 }
+
 #welcome{
     text-align: center;
     font-family: zapfino;
@@ -2019,6 +2025,7 @@ form.stdcontact fieldset label{
     background: radial-gradient(ellipse at center,  #8a57c1 0%,#753aad 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8a57c1', endColorstr='#753aad',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
 }
+
 #welcometag{
     font-size: 44px;
     font-family: zapfino;
@@ -2033,6 +2040,7 @@ form.stdcontact fieldset label{
     width: 360px;
     margin: 0 auto;
 }
+
 #tagline{
     font-family:helvetica;
     text-align: center;
@@ -2045,6 +2053,10 @@ form.stdcontact fieldset label{
     display: block;
     width:980px;
 }
+
+.intro-link { position: relative; }
+a.introindexlink{ width: 302px; height: 403px; position: absolute; z-index: 999; left: 0; top: 0; }
+a.introindexlink:hover{ background-color: rgba(219, 215, 214, 0.2); color: rgba(219, 215, 214, 0.2); }
 
 #stylista{
     background: url('../img/gambar1.png');
@@ -2096,16 +2108,15 @@ form.stdcontact fieldset label{
 	margin-left:15px;
 }
 
-#tag1intro{
+.tag1intro{
     font-family: zapfino;
     color:#3c3c3c;
     font-size:44px;
     display: block;
     margin:20px auto 0 auto;
-    width:25px;
 }
 
-#tag2intro{
+.tag2intro{
     font-family: trajanpro-bold;
     color:#663CA8;
     font-size:21px;
@@ -2117,6 +2128,7 @@ form.stdcontact fieldset label{
 	margin-top: -10px;
 	line-height: 1;
 }
+
 
 .tagcenterintro{margin-top: -17px !important;}
 
@@ -2160,18 +2172,6 @@ form.stdcontact fieldset label{
     color:#797979;
     text-decoration: none;
 }
-a.introindexlink{
-	width: 302px;
-	height: 403px;
-	position: absolute;
-	z-index: 999;
-	margin-left:-150px;
-}
-a.introindexlink:hover{
-	background-color: rgba(219, 215, 214, 0.2);
-    color: rgba(219, 215, 214, 0.2);
-
-}
 
 #header_user_info, #header_nav{
 	margin-right: 20px;
@@ -2179,14 +2179,6 @@ a.introindexlink:hover{
 #header_user_info{
 	float: right;
 	margin-top: -20px;
-}
-
-#newsletter_block_left{
-	clear: both;
-	margin-left: 482px;
-	position: absolute;
-	background: none;
-	margin-top: 30px;
 }
 
 .emailnews{}
@@ -2385,9 +2377,6 @@ table#cart_summary{width:auto;}
 
 /* by chandra */
 /* homepage */
-#homepic .homepicfour { margin-right: 40px; }
-#homepic .big-circle { margin: 100px auto; }
-#homepic .small-circle { margin-top: 15px; margin-left: 15px; }
 
 /* product-list.tpl */
 ul#product_list { 

@@ -26,7 +26,7 @@
 
 {include file="$tpl_dir./breadcrumb.tpl"}
 {include file="$tpl_dir./errors.tpl"}
-{$HOOK_SLIDERCATEGORY}
+
 {if isset($category)}
 	{if $category->id AND $category->active}
 
@@ -41,7 +41,40 @@
 				</span>
 			{/strip}
 		</h1>
-		{displaySlideshow id=2}
+		<div id="pslideshow_2_1">
+			<ul class="pslideshow">
+				<li>
+					<img src="http://www.thereestyle.com/img/pslideshows/1/4.jpg" width="768" height="162" alt="Fashion Trend 2013" />
+					<div class="overlay"><h3>Fashion Trend 2013</h3></div>
+				</li>
+				<li>
+					<img src="http://www.thereestyle.com/img/pslideshows/1/5.jpg" width="768" height="162" alt="Fashion Best Trend 2013" />
+					<div class="overlay"><h3>Fashion Best Trend 2013</h3></div>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#pslideshow_2_1 .pslideshow').bxSlider({
+					 pager:1,
+					 controls:1,
+					 pause:4000,
+					 speed:800,
+					 infiniteLoop:true,
+					 auto:true,
+					 prevText: '',
+					 nextText: '',
+					 randomStart:0,
+					 mode:'horizontal'
+				});	
+			});
+		</script>
+
+		<style type="text/css">
+			#pslideshow_2_1 { width:768px;  }
+			#pslideshow_2_1 .pslideshow ul li { width:768px; height:162px; 	}
+		</style>
+
 		{if $products && !($category->description)}
 			{include file="$tpl_dir./pagination.tpl"}
 		{/if}

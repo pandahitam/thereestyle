@@ -35,52 +35,50 @@
 
 <!-- Footer -->
 			{*<div id="footer2"></div>*}
-			        <div id="footer">
-            <div id="topfooter">
-				{$HOOK_FOOTER}
-				{*
-				<div class="span-1">
-                    <ul>
-                           <li><a href="#">About The Ree Style</a></li>
-                           <li><a href="http://www.rianascloset.com/en/contact-us">Contact Us </a></li>
-                           <li><a href="#">Press</a></li>
-                           <li><a href="#">Request Catalog</a></li>
-                           <li><a href="#">Membership Cards</a></li>
-                       
-                    </ul>  
-                </div>
-                <div class="span-2">
-                    <ul>
-                           <li><a href="#">Help & FAQ</a></li>
-                           <li><a href="#">How To Order</a></li>
-                           <li><a href="#">Shipping Policy</a></li>
-                           <li><a href="#">Size Guide</a></li>
-                           <li><a href="#">Return & Exchange</a></li>
-                       
-                    </ul>  
-                </div>
-                <div class="span-3">
-                    <ul>
-                        <li><a href="#">Become Reseller</a></li>
-                        <li><a href="#">Free Shipping</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Sitemap</a></li>    
-                    </ul>  
-                </div>
-				*}
-                <div class="newsletter">
-                    Sign Up For Our Newsletter
-                </div>
-				
-                <div id="socmed">
-                    <ul>
-                        <li><a href="http://www.facebook.com"><img src="http://www.rianascloset.com/themes/rianascloset/img/facebook.png"></a></li>
-                         <li><a href="http://www.twitter.com"><img src="http://www.rianascloset.com/themes/rianascloset/img/twitter.png"></a></li>
-                          <li><a href="http://www.youtube.com"><img src="http://www.rianascloset.com/themes/rianascloset/img/youtube.png"></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+			<div id="footer">
+				<div id="topfooter" class=" clearfix">
+					<div class="span-1">
+						<ul>
+							   <li><a href="#">About The Ree Style</a></li>
+							   <li><a href="http://www.rianascloset.com/en/contact-us">Contact Us </a></li>
+							   <li><a href="#">Press</a></li>
+							   <li><a href="#">Request Catalog</a></li>
+							   <li><a href="#">Membership Cards</a></li>
+						   
+						</ul>  
+					</div>
+					<div class="span-2">
+						<ul>
+							   <li><a href="#">Help & FAQ</a></li>
+							   <li><a href="#">How To Order</a></li>
+							   <li><a href="#">Shipping Policy</a></li>
+							   <li><a href="#">Size Guide</a></li>
+							   <li><a href="#">Return & Exchange</a></li>
+						   
+						</ul>  
+					</div>
+					<div class="span-3">
+						<ul>
+							<li><a href="#">Become Reseller</a></li>
+							<li><a href="#">Free Shipping</a></li>
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Sitemap</a></li>    
+						</ul>  
+					</div>
+					<div class="newsletter">
+						Sign Up For Our Newsletter
+						{$HOOK_FOOTER}
+					</div>
+					
+					<div id="socmed">
+						<ul>
+							<li><a href="http://www.facebook.com"><img src="http://www.rianascloset.com/themes/rianascloset/img/facebook.png"></a></li>
+							<li><a href="http://www.twitter.com"><img src="http://www.rianascloset.com/themes/rianascloset/img/twitter.png"></a></li>
+							<li><a href="http://www.youtube.com"><img src="http://www.rianascloset.com/themes/rianascloset/img/youtube.png"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
         </div>
         <div id="bottomfooter">
 	        <div id="footertag">

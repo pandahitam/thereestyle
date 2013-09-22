@@ -37,6 +37,7 @@
 		<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 		<meta name="generator" content="PrestaShop" />
 		<meta name="robots" content="{if isset($nobots)}no{/if}index,follow" />
+		<meta name="viewport" content="initial-scale=1, width=980" />
 		<link rel="icon" type="image/vnd.microsoft.icon" href="{$img_ps_dir}favicon.ico?{$img_update_time}" />
 		<link rel="shortcut icon" type="image/x-icon" href="{$img_ps_dir}favicon.ico?{$img_update_time}" />
 		<script type="text/javascript">
@@ -51,11 +52,13 @@
 	{foreach from=$css_files key=css_uri item=media}
 	<link href="{$css_uri}" rel="stylesheet" type="text/css" media="{$media}" />
 	{/foreach}
+	<link href="/modules/pslideshows/jquery.bxSlider/bx_styles.css" rel="stylesheet" type="text/css" media="screen" />
 {/if}
 {if isset($js_files)}
 	{foreach from=$js_files item=js_uri}
 	<script type="text/javascript" src="{$js_uri}"></script>
 	{/foreach}
+	<script type="text/javascript" src="/modules/pslideshows/jquery.bxSlider/jquery.bxSlider.min.js"></script>
 {/if}
 		
 	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
@@ -70,7 +73,7 @@
 		{/if}
 		<!-- Header -->
 		<div id="header">
-			<div id="page">
+			<div id="page" class="clearfix">
 				<a id="header_logo" href="{$base_dir}index.html" title="{$shop_name|escape:'htmlall':'UTF-8'}">
 					{*<img class="logo" src="{$img_ps_dir}logo.jpg?{$img_update_time}" alt="{$shop_name|escape:'htmlall':'UTF-8'}" {if $logo_image_width}width="{$logo_image_width}"{/if} {if $logo_image_height}height="{$logo_image_height}" {/if} />*}
 					{*change by rocanowi 20120801*}
@@ -90,12 +93,8 @@
 						</form>
 					</div>
 				</div>
-				
-	
 				{$HOOK_TOP}
 				{$HOOK_HEADER}
-	
-				
 			</div>
 		</div>
 			
