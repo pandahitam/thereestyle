@@ -41,6 +41,10 @@
 				</span>
 			{/strip}
 		</h1>
+		{if $products && !($category->description)}
+			{include file="$tpl_dir./pagination.tpl"}
+		{/if}
+		
 		<div id="pslideshow_2_1">
 			<ul class="pslideshow">
 				<li>
@@ -75,9 +79,6 @@
 			#pslideshow_2_1 .pslideshow ul li { width:768px; height:162px; 	}
 		</style>
 
-		{if $products && !($category->description)}
-			{include file="$tpl_dir./pagination.tpl"}
-		{/if}
 		{if $scenes}
 			<!-- Scenes -->
 			{include file="$tpl_dir./scenes.tpl" scenes=$scenes}

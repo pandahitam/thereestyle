@@ -1776,7 +1776,7 @@ input:-ms-placeholder { color:#a8a8a8; font-style: italic; }
 
 #homepic{
 	background: url(../img/go-red-for-summer.jpg) no-repeat center top;
-	min-height: 710px;
+	min-height: 660px;
 	margin-top: 50px;
 }
 
@@ -2332,6 +2332,7 @@ opacity: 0.8;
 	list-style: none;
 	display: inline;
 	margin-right: 5px;
+	padding-right: 0;
 }
 #smoothmenu1 li:last-child{
 	margin-right: 0;
@@ -2500,8 +2501,10 @@ p.compare{padding-left: 0 !important; }
 	margin-top: 1px;
 }
 
-/* sidebar */
+/* SIDEBAR */
+/*		categories */
 #categories_block_left .tree { padding-left: 0 !important; }
+#categories_block_left h4 { margin-top: 30px; }
 
 /* other */
 .fullwidth { width: 100%; }
