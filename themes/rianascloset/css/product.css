@@ -16,10 +16,7 @@
 }
 #primary_block #image-block img#bigpic { 
 	cursor: pointer; 
-	//height: 580px;/*changed by rocanowi*/
-	//width: 425px;/*changed by rocanowi*/
-	height: auto;
-	width:auto;
+	width: 400px;
 }
 #primary_block ul#usefull_link_block {
 	list-style-type: none;

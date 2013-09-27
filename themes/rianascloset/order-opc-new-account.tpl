@@ -157,7 +157,7 @@
 					<sup>*</sup>
 				</p>
 				<p class="select">
-					<span>{l s='Date of Birth'}</span>
+					<label>{l s='Date of Birth'}</label>
 					<select id="days" name="days">
 						<option value="">-</option>
 						{foreach from=$days item=day}
@@ -233,7 +233,7 @@
 					<input type="text" class="text" name="address2" id="address2" value="" />
 				</p>
 				{elseif $field_name eq "postcode"}
-				<p class="required postcode text">
+				<p class="required text">
 					<label for="postcode">{l s='Zip / Postal code'}</label>
 					<input type="text" class="text" name="postcode" id="postcode" value="{if isset($guestInformations) && $guestInformations.postcode}{$guestInformations.postcode}{/if}" onkeyup="$('#postcode').val($('#postcode').val().toUpperCase());" />
 					<sup>*</sup>
@@ -241,7 +241,7 @@
 				{elseif $field_name eq "city"}
 				<p class="required text">
 					<label for="city">{l s='City'}</label>
-					<input type="text" class="text" name="city" id="city" value="{if isset($guestInformations) && $guestInformations.city}{$guestInformations.city}{/if}" />
+					<input type="text" readonly="readonly" class="text" name="city" id="city" value="{if isset($guestInformations) && $guestInformations.city}{$guestInformations.city}{/if}" />
 					<sup>*</sup>
 				</p>
 				{elseif $field_name eq "country" || $field_name eq "Country:name"}
@@ -430,9 +430,92 @@
 <script src="{$js_dir}jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 {literal}
-(function($){$.widget("ui.combobox",{_create:function(){var input,self=this,select=this.element.hide(),selected=select.children(":selected"),value=selected.val()?selected.text():"",wrapper=this.wrapper=$("<span>").addClass("ui-combobox").insertAfter(select);input=$("<input>").appendTo(wrapper).val(value).addClass("ui-state-default ui-combobox-input").autocomplete({delay:0,minLength:0,source:function(request,response){var matcher=new RegExp($.ui.autocomplete.escapeRegex(request.term),"i");var select_el=select.get(0);var rep=new Array();var maxRepSize=19;for(var i=0;i<select_el.length;i++){var text=select_el.options[i].text;if(select_el.options[i].value&&(!request.term||matcher.test(text)))
-rep.push({label:text,value:text,option:select_el.options[i]});if(rep.length>maxRepSize){rep.push({label:"more...",value:"maxRepSizeReached",option:""});break;}}
-response(rep);},select:function(event,ui){if(ui.item.value=="maxRepSizeReached"){return false;}else{$('#city').val(ui.item.option.text);ui.item.option.selected=true;self._trigger("selected",event,{item:ui.item.option});}},focus:function(event,ui){if(ui.item.value=="maxRepSizeReached"){return false;}},change:function(event,ui){if(!ui.item){var matcher=new RegExp("^"+$.ui.autocomplete.escapeRegex($(this).val())+"$","i"),valid=false;select.children("option").each(function(){if($(this).text().match(matcher)){this.selected=valid=true;return false;}});if(!valid){$(this).val("");select.val("");input.data("autocomplete").term="";return false;}}}}).addClass("ui-widget ui-widget-content ui-corner-left");input.data("autocomplete")._renderItem=function(ul,item){return $("<li></li>").data("item.autocomplete",item).append("<a>"+item.label+"</a>").appendTo(ul);};$("<a>").attr("tabIndex",-1).attr("title","Show All Items").appendTo(wrapper).button({icons:{primary:"ui-icon-triangle-1-s"},text:false}).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle").click(function(){if(input.autocomplete("widget").is(":visible")){input.autocomplete("close");return;}
-$(this).blur();input.autocomplete("search","");input.focus();});},destroy:function(){this.wrapper.remove();this.element.show();$.Widget.prototype.destroy.call(this);}});})(jQuery);$(function(){$("#id_state").combobox();});
+(function($){
+	$.widget("ui.combobox",{
+		_create:function(){
+			var input,
+				self=this,
+				select=this.element.hide(),
+				selected=select.children(":selected"),
+				value=selected.val()?selected.text():"",
+				wrapper=this.wrapper=$("<span>").addClass("ui-combobox").insertAfter(select);
+			input=$("<input>").appendTo(wrapper).val(value).addClass("ui-state-default ui-combobox-input").autocomplete({
+				delay:0,minLength:0,
+				source:function(request,response){
+					var matcher=new RegExp($.ui.autocomplete.escapeRegex(request.term),"i");
+					var select_el=select.get(0);
+					var rep=new Array();
+					var maxRepSize=19;
+					for(var i=0;i<select_el.length;i++){
+						var text=select_el.options[i].text;
+						if(select_el.options[i].value&&(!request.term||matcher.test(text)))
+							rep.push({label:text,value:text,option:select_el.options[i]});
+						if(rep.length>maxRepSize){
+							rep.push({label:"more...",value:"maxRepSizeReached",option:""});
+							break;
+						}
+					}
+					response(rep);
+				},
+				select:function(event,ui){
+					if(ui.item.value=="maxRepSizeReached"){
+						return false;
+					}else{
+						//$('#id_state').val(ui.item.option.value);
+						$('#id_state').find('option[value='+ui.item.option.value+']').attr('selected', 'selected');
+						$('#city').val(ui.item.option.text);
+						ui.item.option.selected=true;
+						self._trigger("selected",event,{item:ui.item.option});
+					}
+				},
+				focus:function(event,ui){
+					if(ui.item.value=="maxRepSizeReached"){
+						return false;
+					}
+				},
+				change:function(event,ui){
+					if(!ui.item){
+						var matcher=new RegExp("^"+$.ui.autocomplete.escapeRegex($(this).val())+"$","i"),
+							valid=false;
+						select.children("option").each(function(){
+							if($(this).text().match(matcher)){
+								this.selected=valid=true;
+								return false;
+							}
+						});
+						if(!valid){
+							$(this).val("");
+							select.val("");
+							input.data("autocomplete").term="";return false;
+						}
+					}
+				}
+			}).addClass("ui-widget ui-widget-content ui-corner-left");
+			input.data("autocomplete")._renderItem=function(ul,item){
+				return $("<li></li>").data("item.autocomplete",item).append("<a>"+item.label+"</a>").appendTo(ul);
+			};
+			$("<a>").attr("tabIndex",-1).attr("title","Show All Items").appendTo(wrapper).button({
+				icons:{primary:"ui-icon-triangle-1-s"},
+				text:false
+			}).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle").click(function(){
+				if(input.autocomplete("widget").is(":visible")){
+					input.autocomplete("close");
+					return;
+				}
+				$(this).blur();
+				input.autocomplete("search","");
+				input.focus();
+			});
+		},
+		destroy:function(){
+			this.wrapper.remove();
+			this.element.show();
+			$.Widget.prototype.destroy.call(this);
+		}
+	});
+})(jQuery);
+$(function(){
+	$("#id_state").combobox();
+});
 {/literal}
 </script>

@@ -399,7 +399,7 @@ body.mceContentBody {
 
 /* global table style */
 div.table_block {
-	background: transparent url('../img/table_footer.gif') no-repeat bottom left;
+	//background: transparent url('../img/table_footer.gif') no-repeat bottom left;
 	padding-bottom: 6px;
 	//margin: 0 auto 2em;
 	//width: 541px
@@ -498,7 +498,7 @@ form.std .checkbox label, form.std .radio label, form.std span.form_info {
 .required sup { color: #da0f00 }
 form.std p.checkbox { padding-left: 30% }
 form.std p.submit {
-	padding-left: 31%!important;
+	/* padding-left: 31%!important; */
 	margin-bottom: 1.5em
 }
 #center_column form.std p.submit2 {
@@ -1492,7 +1492,8 @@ ul.shop_info li {
 .payment_module { display: block }
 .payment_module img {
 	vertical-align: middle;
-	margin-right: 1em
+	margin-right: 1em;
+	float: left;
 }
 .payment_module a {
 	display: block;
@@ -2500,6 +2501,9 @@ p.compare{padding-left: 0 !important; }
 #desainercollection .pagination{
 	margin-top: 1px;
 }
+
+/* SIDEBAR ACCOUNT */
+div.block.myaccount ul.bullet li { background: none; }
 
 /* SIDEBAR */
 /*		categories */

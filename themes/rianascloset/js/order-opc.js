@@ -547,7 +547,7 @@ $(function() {
 				else
 					params += encodeURIComponent($(this).attr('name'))+'='+encodeURIComponent($(this).val())+'&';
 			});
-			$('#opc_account_form select:visible').each(function() {
+			$('#opc_account_form select').each(function() {
 				params += encodeURIComponent($(this).attr('name'))+'='+encodeURIComponent($(this).val())+'&';
 			});
 			params += 'customer_lastname='+encodeURIComponent($('#customer_lastname').val())+'&';
