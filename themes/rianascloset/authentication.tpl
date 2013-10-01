@@ -237,7 +237,7 @@ $(function(){ldelim}
 						{elseif $field_name eq "city"}
 						<p class="required text">
 							<label for="city">{l s='City'}</label>
-							<input type="text" class="text" name="city" id="city" value="{if isset($smarty.post.city)}{$smarty.post.city}{/if}">
+							<input type="text" class="text" name="city" readonly="readonly" id="city" value="{if isset($smarty.post.city)}{$smarty.post.city}{/if}">
 							<sup>*</sup>
 						</p>
 							<!--
@@ -430,7 +430,7 @@ $(function(){ldelim}
 			{elseif $field_name eq "city"}
 				<p class="required text">
 					<label for="city">{l s='City'}</label>
-					<input type="text" class="text" name="city" id="city" value="{if isset($smarty.post.city)}{$smarty.post.city}{/if}" />
+					<input type="text" class="text" name="city" readonly="readonly" id="city" value="{if isset($smarty.post.city)}{$smarty.post.city}{/if}" />
 					<sup>*</sup>
 				</p>
 				<!--

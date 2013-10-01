@@ -77,6 +77,7 @@
 #new_account_form #months, #new_account_form #years { margin-left: 0.2em; }
 #new_account_form .ui-combobox-toggle { margin-left: 70px; }
 #new_account_form #id_country { max-width: 162px; }
+#new_account_form p.select span { margin-right: 10px; }
 .ui-state-hover { background-image: none; }
 
 /* carrier */

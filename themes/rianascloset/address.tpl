@@ -174,7 +174,7 @@ $(function(){ldelim}
 		</p>
 		{/if}
 		{if $field_name eq 'postcode'}
-		<p class="required postcode text">
+		<p class="required text">
 			<label for="postcode">{l s='Zip / Postal Code'}</label>
 			<input type="text" id="postcode" name="postcode" value="{if isset($smarty.post.postcode)}{$smarty.post.postcode}{else}{if isset($address->postcode)}{$address->postcode|escape:'htmlall':'UTF-8'}{/if}{/if}" onkeyup="$('#postcode').val($('#postcode').val().toUpperCase());" />
 			<sup>*</sup>
@@ -183,7 +183,7 @@ $(function(){ldelim}
 		{if $field_name eq 'city'}
 		<p class="required text">
 			<label for="city">{l s='City'}</label>
-			<input type="text" name="city" id="city" value="{if isset($smarty.post.city)}{$smarty.post.city}{else}{if isset($address->city)}{$address->city|escape:'htmlall':'UTF-8'}{/if}{/if}" maxlength="64" />
+			<input type="text" name="city" id="city" readonly="readonly" value="{if isset($smarty.post.city)}{$smarty.post.city}{else}{if isset($address->city)}{$address->city|escape:'htmlall':'UTF-8'}{/if}{/if}" maxlength="64" />
 			<sup>*</sup>
 		</p>
 		<!-- If the merchant has not updated his layout address, country has to be verified - however it's deprecated -->

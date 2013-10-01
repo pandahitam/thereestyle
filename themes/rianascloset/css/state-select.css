@@ -8,15 +8,17 @@
 .ui-combobox-toggle {
 	position: absolute;
 	top: 0;
-	bottom: 0;
-	margin-left: 90px;
+	/* bottom: 0; */
+	height: 2em;
+	margin-left: 5px;
 	padding: 0;
-	/* adjust styles for IE 6/7 */
-	*height: 1.7em;
+	/* adjust styles for IE 6/7 
 	*top: 0.1em;
+	*/
 }
 .ui-combobox-input {
 	margin: 0;
-	padding: 0.3em;	width:175px;
+	padding: 0.3em;	
+	width: 205px;
 }
 li.ui-menu-item {text-align:left;}
