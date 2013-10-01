@@ -543,7 +543,7 @@ $(function() {
 				params = 'method=editCustomer&';
 			}
 
-			$('#opc_account_form input:visible, #opc_account_form input[type=hidden]').each(function() {
+			$('#opc_account_form input:visible, #opc_account_form input[type=hidden], #opc_account_form #id_state').each(function() {
 				if ($(this).is('input[type=checkbox]'))
 				{
 					if ($(this).is(':checked'))

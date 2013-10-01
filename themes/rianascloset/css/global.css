@@ -209,7 +209,7 @@ h1 span {
 h2 {
 	font-size: 1.1em;
 	line-height: 1.6em;
-	padding-left: 0.5em;
+	/* padding-left: 0.5em; */
 	margin: 0.5em 0;
 	text-transform: uppercase;
 	font-weight: bold;
