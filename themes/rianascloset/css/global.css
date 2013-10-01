@@ -217,14 +217,7 @@ h2 {
 	/*background: transparent url('../img/title_bg.png') no-repeat top left;*/
 	height: 21px
 }
-h2 span {
-	font-size: 0.9em;
-	text-transform: none;
-	font-weight: normal;
-	font-style: italic;
-	color: #374853;
-	margin-left: 1em
-}
+h2 span {}
 h3 { font-size: 1.1em; margin: 1em 0 }
 h4 { font-size: 1em }
 
@@ -1320,16 +1313,22 @@ tr.cart_total_price { font-weight: bold }
 	margin: 1em 0
 }
 
-#order-opc tfoot p {
-	margin: 0;
-	float: left;
-	width: 85%
+.cart_total_price .total_price_container p {
+	display:block;
+	/* padding:8px; */
+	font-weight:bold;
+	/* color:#fff; */
+	text-transform:uppercase;
+	/* background:#333 */
 }
-#order-opc tfoot span {
-	float: right;
-	width: 15%;
-	display: block
+.cart_total_price .total_price_container span {
+	display:block;
+	/* padding:15px; */
+	font-weight:bold;
+	/* font-size:18px; */
+	text-align:right;
 }
+
 #order-opc #voucher fieldset {
 	border: 1px solid #bdc2c9;
 	padding: 0.7em

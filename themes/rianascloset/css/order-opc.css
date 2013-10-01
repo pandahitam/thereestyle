@@ -78,3 +78,8 @@
 #new_account_form .ui-combobox-toggle { margin-left: 70px; }
 #new_account_form #id_country { max-width: 162px; }
 .ui-state-hover { background-image: none; }
+
+/* carrier */
+#carrier_area { float: left; width: 470px; }
+.delivery_option.item input.delivery_option_radio { vertical-align: top; }
+.delivery_option.item label { display: inline-block; }

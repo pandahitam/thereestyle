@@ -80,6 +80,7 @@
 	{if $productNumber}
 		<!-- Shopping Cart -->
 		{include file="$tpl_dir./shopping-cart.tpl"}
+		<p class="clear"></p><br>
 		<!-- End Shopping Cart -->
 		{if $isLogged AND !$isGuest}
 			{include file="$tpl_dir./order-address.tpl"}
