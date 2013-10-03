@@ -1,0 +1,31 @@
+Hello,
+
+
+
+
+
+You have been unsubscribed from our newsletter
+
+
+		
+
+
+		
+
+
+		A request to unsubscribe to our newsletter has been requested to the email-address {email}. It is now effective. 
+
+
+
+
+
+If you are not behind this request thank you to subscribe again by going to topic "My Account" and recheck "newsletter subscription."
+
+
+If you are not registered yet, click on the link below and enter your address in the lower block left "Newsletter":
+
+
+
+
+
+{shop_url}

@@ -1,0 +1,13 @@
+Hi {firstname} {lastname},
+
+Thanks for your order with the reference {order_name} from {shop_name}.
+
+Our customer service will check availability of the items, then contact you for further payment information using phone/email.
+
+You can review your order and download your invoice from the "Order history" section of your customer account by clicking "My account" on our shop.
+
+If you have guest account, you can follow your order using this link: {guest_tracking_url}
+
+{shop_name} - {shop_url}
+
+{shop_url} powered by PrestaShop&trade;
