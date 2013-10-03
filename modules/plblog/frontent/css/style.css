@@ -39,12 +39,11 @@
 	padding: 0px;
 }
 .pl_info_post{
-	//border:1px #cfcfcf solid;
-	//background:#F2F3F5;
+	border:1px #cfcfcf solid;
+	background:#F2F3F5;
 	padding: 7px;
-	padding-left: 1px;
 	margin-bottom: 10px;
-	margin-top: 10px;
+	font-size: 12px;
 }
 .plauthor{
 	float: left;
@@ -75,6 +74,7 @@
 .plconf {
     background-color: #DFFAD3;
     border: 1px solid #72CB67;
+	margin: 5px 0;
 }
 /*===========================================*/
 
@@ -124,14 +124,11 @@
 .pl_comment_form form.std p span.mceEditor{
 	float: left;
 	width: auto;
-	margin-left: 0.8em;
 }
 .plinput-text{
 	float:left;
 	height:19px;
-	width:155px;
 	padding:0px;
-	margin:0px 0px 0px 0.8em;
 }
 .pl_requie{
 	color: #ff0000;
@@ -185,8 +182,44 @@
 	font-size:14px !important;
 	color:red !important;
 }
+#plpost h2 {
+	border: 0 none;
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0 none;
+    padding: 0;
+    vertical-align: baseline;
+	background: none repeat scroll 0 0 transparent;
+    height: auto;
+    text-transform: none;
+	color: #374853;
+    margin: 0.75em 0 0.3em;
+}
 
-/**
- * @author chandra
- */
-.plpost_thumbnail { width: 100%; height: 100px; background-position: center center; margin-bottom: 10px; }
+.std {
+	display: block;
+	font-size: 12px;
+}
+form.std fieldset {
+    border: 1px solid #D0D3D8;
+    margin: 0 0 20px 0;
+    padding: 0 20px 20px 20px;
+}
+form.std h3 {
+    border-bottom: 1px solid #D0D1D5;
+    color: #555555;
+    font-weight: normal;
+    margin: 0 0 0.5em;
+    padding: 0.5em;
+}
+form.std h4, form.std p {
+    clear: both;
+}
+form.std label {
+    padding-right: 10px;
+}
+form.std label, form.std p span {
+    float: left;
+    width: 30%;
+}

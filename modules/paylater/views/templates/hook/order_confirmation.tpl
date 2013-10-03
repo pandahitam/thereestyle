@@ -1,0 +1,1 @@
+<p>{l s='Thank you, your order has been received. Our customer service will check on the product availability. We will contact you within 1x24 hour for further payment information.' mod='paylater'}</p>

@@ -26,7 +26,7 @@
 
 <!-- Block manufacturers module -->
 <div id="manufacturers_block_left" class="block blockmanufacturer">
-	<h4>{if $display_link_manufacturer}<a href="{$link->getPageLink('manufacturer.php')}" title="{l s='Manufacturers' mod='blockmanufacturer'}">{/if}{l s='Shop by Brand' mod='blockmanufacturer'}{if $display_link_manufacturer}</a>{/if}</h4>
+	<h4>{if $display_link_manufacturer}<a href="{$link->getPageLink('manufacturer.php')}" title="{l s='Manufacturers' mod='blockmanufacturer'}">{/if}{l s='Shop by Style' mod='blockmanufacturer'}{if $display_link_manufacturer}</a>{/if}</h4>
 	<div class="block_content">
 {if $manufacturers}
 	{if $text_list}
@@ -42,7 +42,7 @@
 		<form action="{$smarty.server.SCRIPT_NAME}" method="get">
 			<p>
 				<select id="manufacturer_list" onchange="autoUrl('manufacturer_list', '');" style="margin-left:0;">
-					<option value="0">{l s='All Brand' mod='blockmanufacturer'}</option>
+					<option value="0">{l s='All Style' mod='blockmanufacturer'}</option>
 				{foreach from=$manufacturers item=manufacturer}
 					<option value="{$link->getmanufacturerLink($manufacturer.id_manufacturer, $manufacturer.link_rewrite)}">{$manufacturer.name|escape:'htmlall':'UTF-8'}</option>
 				{/foreach}

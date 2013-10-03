@@ -28,7 +28,8 @@ class PayLater extends PaymentModule
 			
 		return parent::install() &&
 			$this->registerHook('displayPayment') &&
-			$this->registerHook('paymentReturn');
+			$this->registerHook('paymentReturn') &&
+			$this->registerHook('displayOrderConfirmation');
 	}
 	
 	public function uninstall()
@@ -49,6 +50,11 @@ class PayLater extends PaymentModule
 		));
 		
 		return $this->display(__FILE__, 'payment.tpl');
+	}
+	
+	public function hookDisplayOrderConfirmation()
+	{
+		return $this->display(__FILE__, 'order_confirmation.tpl');
 	}
 	
 	public function execPayment($cart)

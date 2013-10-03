@@ -14,8 +14,8 @@ class PlBlog extends Module
 		$this->name = 'plblog';
 		$this->displayName = $this->l('Blog');
 		$this->description = $this->l('Free Blog Module');
-		$this->version = '1.1.8';
-		$this->author = 'PrestaLive';
+		$this->version = '1.5 SC';
+		$this->author = 'PrestaLive and Chirby';
 		$this->tab = 'front_office_features';
 		
 		parent::__construct();
@@ -123,39 +123,39 @@ class PlBlog extends Module
 	function installRewriteURL()
 	{		
 		$link_list_post = 'modules/plblog/frontent/list-post.php?plidc=$1&plcn=$2&';
-		$link_list_post_rewrite = 'blog/([0-9]*)_([a-zA-Z0-9-]*)\.html';
+		$link_list_post_rewrite = '([a-z/]*)blog/([0-9]*)_([a-zA-Z0-9-]*)\.html';
 		
 		$link_details = 'modules/plblog/frontent/details.php?plcn=$1&plidp=$2&plpn=$3&';
-		$link_details_rewrite = 'blog/([a-zA-Z0-9-]*)/([0-9]*)-([a-zA-Z0-9-]*)\.html';
+		$link_details_rewrite = '([a-z/]*)blog/([a-zA-Z0-9-]*)/([0-9]*)-([a-zA-Z0-9-]*)\.html';
 		
 		$link_tags = 'modules/plblog/frontent/list-tags.php?pltn=$1&plidt=$2&';
-		$link_tags_rewrite = 'blog/tag/([a-zA-Z0-9-]*)_([0-9]*)\.html';
+		$link_tags_rewrite = '([a-z/]*)blog/tag/([a-zA-Z0-9-]*)_([0-9]*)\.html';
 		
 		$link_all_post = 'modules/plblog/frontent/all-post';
-		$link_all_post_rewrite = 'blog/all-post.html';
+		$link_all_post_rewrite = '([a-z/]*)blog/all-post.html';
 		
 		// rewrite url list-post.php	
 		$sql = "INSERT INTO "._DB_PREFIX_."meta (id_meta ,page)
 				VALUES (NULL , '".$link_list_post."');
 				";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// rewrite url details.php
 		$sql = "INSERT INTO "._DB_PREFIX_."meta (id_meta , page)
 				VALUES (NULL , '".$link_details."');";
-		Db::getInstance()->ExecuteS($sql);	
+		Db::getInstance()->Execute($sql);	
 		
 		// rewrite url list-tags.php
 		$sql = "INSERT INTO "._DB_PREFIX_."meta (id_meta, page)
 				VALUES(NULL, '".$link_tags."');
 				";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// rewrite url all-post.html.php
 		$sql = "INSERT INTO "._DB_PREFIX_."meta (id_meta, page)
 				VALUES(NULL, '".$link_all_post."');
 				";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		//$langs = Language::getLanguages();
 		$langs = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'lang');
@@ -167,25 +167,25 @@ class PlBlog extends Module
 			$id_meta = $this->getIdMetaByPage($link_list_post);
 			$sql = "INSERT INTO "._DB_PREFIX_."meta_lang (id_meta ,	id_lang ,title , url_rewrite)
 					VALUES (".$id_meta.", ".$id_lang.", 'List post' , '".$link_list_post_rewrite."');";
-			Db::getInstance()->ExecuteS($sql);	
+			Db::getInstance()->Execute($sql);	
 
 			// details
 			$id_meta = $this->getIdMetaByPage($link_details);
 			$sql = "INSERT INTO "._DB_PREFIX_."meta_lang (id_meta ,	id_lang ,title ,url_rewrite	)
 					VALUES (".$id_meta.", ".$id_lang.", 'Post detail' , '".$link_details_rewrite."');";
-			Db::getInstance()->ExecuteS($sql);				
+			Db::getInstance()->Execute($sql);				
 			
 			// tags
 			$id_meta = $this->getIdMetaByPage($link_tags);
 			$sql = "INSERT INTO "._DB_PREFIX_."meta_lang (id_meta, id_lang, title, url_rewrite )
 					VALUES (".$id_meta.", ".$id_lang.", 'List tags', '".$link_tags_rewrite."');";
-			Db::getInstance()->ExecuteS($sql);
+			Db::getInstance()->Execute($sql);
 			
 			// all-post.html
 			$id_meta = $this->getIdMetaByPage($link_all_post);
 			$sql = "INSERT INTO "._DB_PREFIX_."meta_lang (id_meta, id_lang, title, url_rewrite )
 					VALUES (".$id_meta.", ".$id_lang.", 'All post', '".$link_all_post_rewrite."');";
-			Db::getInstance()->ExecuteS($sql);			
+			Db::getInstance()->Execute($sql);			
 		}
 	}
 	
@@ -211,28 +211,28 @@ class PlBlog extends Module
 		$link_all_post_rewrite = 'blog/all-post.html';
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta WHERE page='".$link_list_post."'";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta_lang WHERE url_rewrite='".$link_list_post_rewrite."'";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta WHERE page='".$link_tags."'";
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta_lang WHERE url_rewrite='".$link_tags_rewrite."'";
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta WHERE page='".$link_details."'";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta_lang WHERE url_rewrite='".$link_details_rewrite."'";
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta WHERE page='".$link_all_post."'";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = "DELETE FROM "._DB_PREFIX_."meta_lang WHERE url_rewrite='".$link_all_post_rewrite."'";
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 	}
 	
 	private function getIDTabParent($tabClass)
@@ -250,7 +250,7 @@ class PlBlog extends Module
 		/* Table category and category_lang*/
 		// Table category
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_category';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_category(
 				id_pl_blog_category int(11) NOT NULL AUTO_INCREMENT,
@@ -262,14 +262,14 @@ class PlBlog extends Module
 				category_allow_comment bool NULL,
 				PRIMARY KEY (id_pl_blog_category)
 				)';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql =' INSERT INTO '._DB_PREFIX_.'pl_blog_category(category_status, position) VALUES(1, 0) ';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 
 		// Table category_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_category_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_category_lang(
 				id_pl_blog_category int(11) NOT NULL AUTO_INCREMENT,
@@ -282,34 +282,34 @@ class PlBlog extends Module
 				link_rewrite nvarchar(1000) NULL,
 				PRIMARY KEY(id_pl_blog_category, id_lang)
 				)';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$langs = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'lang');
 		foreach ($langs as $lang)
 		{
 			$sql = ' INSERT INTO '._DB_PREFIX_.'pl_blog_category_lang(id_pl_blog_category, id_lang, category_name) VALUES(1, '.$lang['id_lang'].',"") ';
-			Db::getInstance()->ExecuteS($sql);
+			Db::getInstance()->Execute($sql);
 		}
 		
 		/*Table post and post_lang*/
 		// Table post
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_post';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_post(
 				id_pl_blog_post int(11) NOT NULL AUTO_INCREMENT,
 				id_pl_blog_category int(11) NULL,
 				id_pl_blog_tags int(11) NULL,
-				post_date_create datetime NULL,
+				post_date_create TIMESTAMP NOT NULL, 
 				post_allow_comment boolean NULL,
 				post_status boolean NULL,
 				PRIMARY KEY(id_pl_blog_post)
 				)';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// Table post_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_post_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_post_lang(
 				id_pl_blog_post int(11) NOT NULL AUTO_INCREMENT,
@@ -322,7 +322,7 @@ class PlBlog extends Module
 				link_rewrite nvarchar(1000) NULL,
 				PRIMARY KEY(id_pl_blog_post, id_lang)
 				)';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		/* Table post_tag */
 		$sql = "CREATE TABLE IF NOT EXISTS "._DB_PREFIX_."pl_blog_post_tag(
@@ -330,12 +330,12 @@ class PlBlog extends Module
 				id_pl_tag int(11) NOT NULL,
 				PRIMARY KEY (id_pl_blog_post, id_pl_tag)
 				)";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		/*Table comment and comment_lang*/
 		// Table comment
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_comment';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_comment(
 				id_pl_blog_comment int(11) NOT NULL AUTO_INCREMENT,
@@ -346,11 +346,11 @@ class PlBlog extends Module
 				comment_status int(11) NULL,
 				PRIMARY KEY(id_pl_blog_comment)
 				)';
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		// Table comment_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_comment_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_comment_lang(
 				id_pl_blog_comment int(11) NOT NULL AUTO_INCREMENT,
@@ -358,30 +358,30 @@ class PlBlog extends Module
 				comment_content nvarchar(7000) NULL,
 				PRIMARY KEY(id_pl_blog_comment, id_lang)
 				)';
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		/* Table comment_status */
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_comment_status';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_comment_status(
 					id_pl_blog_comment_status int(11) NOT NULL AUTO_INCREMENT,
 					name nvarchar(10) NOT NULL,
 					PRIMARY KEY (id_pl_blog_comment_status)
 					)';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$comment_status_name = array('Pending', 'Approved' , 'Spam' );
 		for ($i = 0; $i < count($comment_status_name); $i++)
 		{
 			$sql = 'INSERT INTO '._DB_PREFIX_.'pl_blog_comment_status(name) VALUES("'.$comment_status_name[$i].'")';
-			Db::getInstance()->ExecuteS($sql);
+			Db::getInstance()->Execute($sql);
 		}
 		
 		/* Table tags and tags_lang */
 		// Table tags
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_tags';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_tags(
 				id_pl_blog_tags int(11) NOT NULL AUTO_INCREMENT,
@@ -389,16 +389,16 @@ class PlBlog extends Module
 				tags_date_create datetime NULL,
 				PRIMARY KEY(id_pl_blog_tags)
 				)';
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		$sql = "INSERT INTO "._DB_PREFIX_."pl_blog_tags (tags_url)
 				VALUES('')
 			   ";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// Table tags_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_tags_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		$sql = 'CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'pl_blog_tags_lang(
 				id_pl_blog_tags int(11) NOT NULL AUTO_INCREMENT,
@@ -407,7 +407,7 @@ class PlBlog extends Module
 				tags_description nvarchar(7000) NULL,
 				PRIMARY KEY(id_pl_blog_tags, id_lang)
 				)';
-		Db::getInstance()->ExecuteS($sql);	
+		Db::getInstance()->Execute($sql);	
 		
 		$langs = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'lang');
 		foreach ($langs as $lang)
@@ -416,7 +416,7 @@ class PlBlog extends Module
 			$sql = "INSERT INTO "._DB_PREFIX_."pl_blog_tags_lang (id_pl_blog_tags, id_lang, tags_name)
 					VALUES(1, ".$id_lang.", '')
 				   ";
-			Db::getInstance()->ExecuteS($sql);
+			Db::getInstance()->Execute($sql);
 		}
 		
 		return true;
@@ -426,43 +426,43 @@ class PlBlog extends Module
 	{
 		// delete table faqcat
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_category';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table faqcat_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_category_lang';
-		Db::getInstance()->ExecuteS($sql);		
+		Db::getInstance()->Execute($sql);		
 		
 		// delete table post
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_post';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table post_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_post_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table post_tag
 		$sql = "DROP TABLE IF EXISTS "._DB_PREFIX_."pl_blog_post_tag";
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table comment
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_comment';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table comment_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_comment_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table tags
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_tags';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table comment_lang
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_tags_lang';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		// delete table comment_status
 		$sql = 'DROP TABLE IF EXISTS '._DB_PREFIX_.'pl_blog_comment_status';
-		Db::getInstance()->ExecuteS($sql);
+		Db::getInstance()->Execute($sql);
 		
 		return true;
 	}
@@ -504,10 +504,9 @@ class PlBlog extends Module
 	}
 	public function hookHeader($params)
 	{
-		global $smarty,$cookie;
-        $smarty->assign('this_path', $this->_path);
-        return $this->display(__FILE__, '/frontent/tpl/plblogheader.tpl');
+		$this->context->controller->addCSS(($this->_path).'frontent/css/style.css', 'all');
 	}
+
 	function hookRightColumn($params)
 	{	
 		global $smarty, $link;
@@ -533,9 +532,9 @@ class PlBlog extends Module
 					
 					$url_rewrite = Configuration::get('PS_REWRITING_SETTINGS');
 					if ($url_rewrite == 1)
-						$this->_html_categories .= '<a href="'.$link->getPageLink('blog/'.$this->str_url($row['category_name']).'.'.$row['id_pl_blog_category'].'.html').'">'.$row['category_name'].'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('blog/'.$this->str_url($row['category_name']).'.'.$row['id_pl_blog_category'].'.html').'">'.$row['category_name'].'</a><br/>';
 					else
-						$this->_html_categories .= '<a href="'.$link->getPageLink('modules/plblog/frontent/list-post.php?plcn='.$this->str_url($row['category_name'])).'&plidc='.$row['id_pl_blog_category'].'">'.$row['category_name'].'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('modules/plblog/frontent/list-post.php?plcn='.$this->str_url($row['category_name'])).'&plidc='.$row['id_pl_blog_category'].'">'.$row['category_name'].'</a><br/>';
 					
 					$_index_data = $this->getHtmlCategories($data, $_index_data, $row, '');
 				}
@@ -544,7 +543,7 @@ class PlBlog extends Module
 		
 		$smarty->assign('_html_categories', $this->_html_categories);			
 		
-		$smarty->assign('home', $link->getPageLink(''));
+		$smarty->assign('home', $link->getPageLinkOld(''));
 		$smarty->assign('url_rewrite', Configuration::get('PS_REWRITING_SETTINGS'));
 		
 		$tags = $this->getTags();
@@ -622,9 +621,9 @@ class PlBlog extends Module
 					
 					$url_rewrite = Configuration::get('PS_REWRITING_SETTINGS');
 					if ($url_rewrite == 1)
-						$this->_html_categories .= '<a href="'.$link->getPageLink('blog/'.$this->str_url($row['category_name']).'.'.$row['id_pl_blog_category'].'.html').'">'.$row['category_name'].'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('blog/'.$this->str_url($row['category_name']).'.'.$row['id_pl_blog_category'].'.html').'">'.$row['category_name'].'</a><br/>';
 					else
-						$this->_html_categories .= '<a href="'.$link->getPageLink('modules/plblog/frontent/list-post.php?plcn='.$this->str_url($row['category_name'])).'&plidc='.$row['id_pl_blog_category'].'">'.$row['category_name'].'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('modules/plblog/frontent/list-post.php?plcn='.$this->str_url($row['category_name'])).'&plidc='.$row['id_pl_blog_category'].'">'.$row['category_name'].'</a><br/>';
 					
 					$_index_data = $this->getHtmlCategories($data, $_index_data, $row, '');
 				}
@@ -633,7 +632,7 @@ class PlBlog extends Module
 		
 		$smarty->assign('_html_categories', $this->_html_categories);			
 		
-		$smarty->assign('home', $link->getPageLink(''));
+		$smarty->assign('home', $link->getPageLinkOld(''));
 		$smarty->assign('url_rewrite', Configuration::get('PS_REWRITING_SETTINGS'));
 		
 		$tags = $this->getTags();
@@ -708,12 +707,12 @@ class PlBlog extends Module
 		global $link;
 		if (Configuration::get("PS_REWRITING_SETTINGS") == 0)
 		{
-			$url = $link->getPageLink('').'modules/plblog/frontent/list-post.php?plidc='.$id_pl_blog_category.'&plcn='.$link_rewrite;
+			$url = $link->getPageLinkOld('').'modules/plblog/frontent/list-post.php?plidc='.$id_pl_blog_category.'&plcn='.$link_rewrite;
 			return $url;
 		}
 		else
 		{
-			$url = $link->getPageLink('blog/'.$id_pl_blog_category.'_'.$link_rewrite.'.html');
+			$url = $link->getPageLinkOld('blog/'.$id_pl_blog_category.'_'.$link_rewrite.'.html');
 			return $url;
 		}
 	}
@@ -765,9 +764,9 @@ class PlBlog extends Module
 					
 					$url_rewrite = Configuration::get('PS_REWRITING_SETTINGS');
 					if ($url_rewrite == 1)
-						$this->_html_categories .= '<a href="'.$link->getPageLink('list-post/page-0/'.$row['id_pl_blog_category'].'-'.$this->str_url($row['category_name']).'.html">'.$row['category_name']).'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('list-post/page-0/'.$row['id_pl_blog_category'].'-'.$this->str_url($row['category_name']).'.html">'.$row['category_name']).'</a><br/>';
 					else
-						$this->_html_categories .= '<a href="'.$link->getPageLink('modules/plblog/frontent/list-post.php?plpage=0&plidc='.$row['id_pl_blog_category'].'&plcn='.$this->str_url($row['category_name'])).'">'.$row['category_name'].'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('modules/plblog/frontent/list-post.php?plpage=0&plidc='.$row['id_pl_blog_category'].'&plcn='.$this->str_url($row['category_name'])).'">'.$row['category_name'].'</a><br/>';
 					
 					$_index_data = $this->getHtmlCategories($data, $_index_data, $row, '');
 				}
@@ -793,9 +792,9 @@ class PlBlog extends Module
 					$url_rewrite = Configuration::get('PS_REWRITING_SETTINGS');
 					$this->_html_categories .= $this->sp($_vt);
 					if ($url_rewrite == 1)
-						$this->_html_categories .= '<a href="'.$link->getPageLink('blog/'.$this->str_url($category['category_name']).'.'.$category['id_pl_blog_category'].'.html').'">'.$category['category_name'].'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('blog/'.$this->str_url($category['category_name']).'.'.$category['id_pl_blog_category'].'.html').'">'.$category['category_name'].'</a><br/>';
 					else
-						$this->_html_categories .= '<a href="'.$link->getPageLink('modules/plblog/frontent/list-post.php?plcn='.$this->str_url($category['category_name'])).'&plidc='.$category['id_pl_blog_category'].'">'.($category['category_name']).'</a><br/>';
+						$this->_html_categories .= '<a href="'.$link->getPageLinkOld('modules/plblog/frontent/list-post.php?plcn='.$this->str_url($category['category_name'])).'&plidc='.$category['id_pl_blog_category'].'">'.($category['category_name']).'</a><br/>';
 														
 					$_index_data = $this->getHtmlCategories($data, $_index_data, $category, $html, ($_vt+1));
 				}

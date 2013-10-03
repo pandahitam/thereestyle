@@ -16,6 +16,7 @@
 }
 #header_user #shopping_cart, #header_user #your_account { font-size: 0.9em }
 #header_user li#your_account { margin-left: 0; list-style: none; }
+#header_user li#shopping_cart { list-style: none; }
 #header_user #shopping_cart a, #header_user #your_account a {
 	background-repeat: no-repeat;
 	background-position: top left;

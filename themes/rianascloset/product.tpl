@@ -397,8 +397,8 @@ var fieldRequired = '{l s='Please fill in all required fields, then save the cus
 </div>
 
 <iframe src="//www.facebook.com/plugins/like.php?href={$link->getImageLink($product->link_rewrite, $cover.id_image, '')};send=false&amp;layout=button_count&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;float:right;margin-right: 90px;margin-top: 1px;" allowTransparency="true"></iframe>
-<iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/tweet_button.html?url={$link->getImageLink($product->link_rewrite, $cover.id_image, '')}&text=Check out this site" style="width:115px; height:21px; float:none;"></iframe>
-<div style="float:left;" class="g-plusone" data-size="medium" data-href="{$link->getImageLink($product->link_rewrite, $cover.id_image, '')}"></div>
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/tweet_button.html?url={$link->getImageLink($product->link_rewrite, $cover.id_image, '')}&text=Check out this site" style="width:100px; height:21px; float:none;"></iframe>
+<a href="//www.pinterest.com/pin/create/button/?url={$link->getImageLink($product->link_rewrite, $cover.id_image, '')}&media{$link->getImageLink($product->link_rewrite, $cover.id_image, '')}&description=thereestyle" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
 
 {if $quantity_discounts}
 <!-- quantity discount -->

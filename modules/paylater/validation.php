@@ -31,5 +31,8 @@ $mailVars = array();
 
 $paylater->validateOrder($cart->id, 15, $total, $paylater->displayName, NULL, $mailVars, (int)$currency->id, false, $customer->secure_key);
 // $paylater->sendEmailConfirmation();
-$order = new Order($paylater->currentOrder);
+echo '1';
+// $order = new Order($paylater->currentOrder);
+echo '2';
 Tools::redirectLink(__PS_BASE_URI__.'order-confirmation.php?id_cart='.$cart->id.'&id_module='.$paylater->id.'&id_order='.$paylater->currentOrder.'&key='.$customer->secure_key);
+echo '3';

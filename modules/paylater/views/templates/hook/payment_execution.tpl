@@ -12,7 +12,6 @@
 
 <form action="{$this_path_ssl}validation.php" method="post">
 	<p>
-		<img src="{$this_path}bankwire.jpg" alt="{l s='bank bca' mod='paylater'}" style="float:left; margin: 0px 10px 5px 0px;" />
 		{l s='Here is a short summary of your order:' mod='paylater'}
 	</p>
 	<p>
@@ -33,8 +32,10 @@
 		<b>{l s='Please confirm your order by clicking \'I confirm my order\'' mod='paylater'}.</b>
 	</p>
 	<p class="cart_navigation">
+		{*
 		<a href="{$link->getPageLink('order.php', true)}?step=3" class="button_large hideOnSubmit">{l s='Other payment methods' mod='paylater'}</a>
-		<input type="submit" name="submit" value="{l s='I confirm my order' mod='paylater'}" class="exclusive_large hideOnSubmit" />
+		*}
+		<input type="submit" name="submit" value="{l s='I confirm my order' mod='paylater'}" class="button_large hideOnSubmit" />
 	</p>
 </form>
 {/if}

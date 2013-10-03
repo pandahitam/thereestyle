@@ -1,4 +1,4 @@
-
+{include file="$module_path/breadcrumb.tpl"}
 <!-- display title -->
 <h1>{$pl_category_name|truncate:60}</h1>
 <!-- /display title -->
@@ -12,7 +12,7 @@
 			<!-- post -->
 			<div id="plpost">
 				<div class="pltitle">
-					<h2>{$post['post_title']}</h2>
+					<h1>{$post['post_title']}</h1>
 				</div>
 				<div class="pl_info_post">
 					<div class="plcount_comment">{$count_comment}{if $count_comment > 1} {l s='Comments' mod='plblog'}{/if}{if $count_comment <= 1} {l s='Comment' mod='plblog'}{/if}</div>		
@@ -30,3 +30,4 @@
 	
 {/if}
 <!-- /display post list -->
+{include file="$module_path/pagination.tpl"}

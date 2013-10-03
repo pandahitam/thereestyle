@@ -1,4 +1,4 @@
-
+{include file="$module_path/breadcrumb.tpl"}
 <!-- display title -->
 <h1>{$pl_tag_name}</h1>
 <!-- /display title -->
@@ -27,3 +27,4 @@
 {l s='There are no artiles on this tag' mod='plblog'}
 {/if}
 <!-- /display post list -->
+{include file="$module_path/pagination.tpl"}

@@ -1,6 +1,4 @@
 <?php
-require_once('simple_html_dom.php');
-
 class PlTools
 {
 	function __construct()
@@ -43,23 +41,23 @@ class PlTools
 			global $link;
             if (Tools::getValue('plidc'))
 			{
-				//$url = $link->getPageLink('blog/'.Tools::getValue('plcn').'.'.Tools::getValue('plidc').'.html');
-				$url = $link->getPageLink('').'modules/plblog/frontent/list-post.php?plcn='.Tools::getValue('plcn').'&plidc='.Tools::getValue('plidc');
+				//$url = $link->getPageLinkOld('blog/'.Tools::getValue('plcn').'.'.Tools::getValue('plidc').'.html');
+				$url = $link->getPageLinkOld('').'modules/plblog/frontent/list-post.php?plcn='.Tools::getValue('plcn').'&plidc='.Tools::getValue('plidc');
 				if (Tools::getValue('n'))
 					$url = $url.(!strstr($url, '?') ? '?' : '&amp;').'n='.(int)(Tools::getValue('n'));
 				return $url;
 			}
 			elseif (Tools::getValue('plidt'))
 			{	
-				//$url = $link->getPageLink('').'blog/'.Tools::getValue('plidt').'.'.Tools::getValue('pltn').'.html';
-				$url = $link->getPageLink('').'modules/plblog/frontent/list-tags.php?plidt='.Tools::getValue('plidt').'&pltn='.Tools::getValue('pltn');
+				//$url = $link->getPageLinkOld('').'blog/'.Tools::getValue('plidt').'.'.Tools::getValue('pltn').'.html';
+				$url = $link->getPageLinkOld('').'modules/plblog/frontent/list-tags.php?plidt='.Tools::getValue('plidt').'&pltn='.Tools::getValue('pltn');
 				if (Tools::getValue('n'))
 					$url = $url.(!strstr($url, '?') ? '?' : '&amp;').'n='.(int)(Tools::getValue('n'));
 				return $url;
 			}
 			else
 			{
-				$url = $link->getPageLink('').'modules/plblog/frontent/all-post.php';;
+				$url = $link->getPageLinkOld('').'modules/plblog/frontent/all-post.php';;
 				if (Tools::getValue('n'))
 					$url = $url.(!strstr($url, '?') ? '?' : '&amp;').'n='.(int)(Tools::getValue('n'));
 				return $url;				
@@ -70,21 +68,21 @@ class PlTools
 			global $link;
             if (Tools::getValue('plidc'))
 			{
-				$url = $link->getPageLink('blog/'.Tools::getValue('plidc').'_'.$this->getFriendlyUrlCategory(Tools::getValue('plidc')).'.html');
+				$url = $link->getPageLinkOld('blog/'.Tools::getValue('plidc').'_'.$this->getFriendlyUrlCategory(Tools::getValue('plidc')).'.html');
 				if (Tools::getValue('n'))
 					$url = $url.(!strstr($url, '?') ? '?' : '&amp;').'n='.(int)(Tools::getValue('n'));
 				return $url;
 			}
 			elseif (Tools::getValue('plidt'))
 			{
-				$url = $link->getPageLink('').'blog/'.Tools::getValue('plidt').'.'.Tools::getValue('pltn').'.html';
+				$url = $link->getPageLinkOld('').'blog/'.Tools::getValue('plidt').'.'.Tools::getValue('pltn').'.html';
 				if (Tools::getValue('n'))
 					$url = $url.(!strstr($url, '?') ? '?' : '&amp;').'n='.(int)(Tools::getValue('n'));
 				return $url;
 			}
 			else
 			{
-				$url = $link->getPageLink('').'blog/all-post.html';
+				$url = $link->getPageLinkOld('').'blog/all-post.html';
 				if (Tools::getValue('n'))
 					$url = $url.(!strstr($url, '?') ? '?' : '&amp;').'n='.(int)(Tools::getValue('n'));
 				return $url;				
@@ -107,12 +105,12 @@ class PlTools
 		if (Configuration::get('PS_REWRITING_SETTINGS') == 1)
 		{
 			$_link = "blog/".$this->getCategoryNameRewrite($id_pl_blog_category).'/'.$id_pl_blog_post.'-'.$link_rewrite.".html";
-			$l = $link->getPageLink($_link);
+			$l = $link->getPageLinkOld($_link);
 		}
 		else
 		{
 			$_link = 'modules/plblog/frontent/details.php?plcn='.$this->getCategoryNameRewrite($id_pl_blog_category).'&plidp='.$id_pl_blog_post.'&plpn='.$link_rewrite;
-			$l = $link->getPageLink($_link);
+			$l = $link->getPageLinkOld($_link);
 		}
 		
 		return $l;
@@ -123,12 +121,12 @@ class PlTools
 		global $link;
 		if (Configuration::get("PS_REWRITING_SETTINGS") == 0)
 		{
-			$url = $link->getPageLink('').'modules/plblog/frontent/list-post.php?plidc='.$id_pl_blog_category.'&plcn='.$link_rewrite;
+			$url = $link->getPageLinkOld('').'modules/plblog/frontent/list-post.php?plidc='.$id_pl_blog_category.'&plcn='.$link_rewrite;
 			return $url;
 		}
 		else
 		{
-			$url = $link->getPageLink('blog/'.$id_pl_blog_category.'_'.$link_rewrite.'.html');
+			$url = $link->getPageLinkOld('blog/'.$id_pl_blog_category.'_'.$link_rewrite.'.html');
 			return $url;
 		}
 	}
@@ -138,12 +136,12 @@ class PlTools
 		global $link;
 		if (Configuration::get("PS_REWRITING_SETTINGS") == 0)
 		{
-			$url = $link->getPageLink('').'modules/plblog/frontent/list-tags.php?pltn='.$this->stringOnLink($tags_name).'&plidt='.$id_pl_blog_tags;
+			$url = $link->getPageLinkOld('').'modules/plblog/frontent/list-tags.php?pltn='.$this->stringOnLink($tags_name).'&plidt='.$id_pl_blog_tags;
 			return $url;
 		}
 		else
 		{
-			$url = $link->getPageLink('blog/tag/'.$this->stringOnLink($tags_name).'_'.$id_pl_blog_tags.'.html');
+			$url = $link->getPageLinkOld('blog/tag/'.$this->stringOnLink($tags_name).'_'.$id_pl_blog_tags.'.html');
 			return $url;
 		}	
 	}
@@ -177,19 +175,5 @@ class PlTools
 		WHERE a.comment_status=2 AND a.id_pl_blog_post='.$id_pl_blog_post;
 		
 		return count(Db::getInstance()->ExecuteS($sql));
-	}
-	
-	/**
-	 * @owner chandra
-	 */
-	function getThumbnail($post_description)
-	{
-		$thumbnail = '';
-		$html = str_get_html($post_description);
-		$img = $html->find('img', 0);
-		if($img != null)
-			$thumbnail = $img->src;
-	
-		return $thumbnail;
 	}
 }

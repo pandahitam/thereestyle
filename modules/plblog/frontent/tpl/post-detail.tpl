@@ -17,7 +17,7 @@
 	}
 </script>
 
-
+{include file="$module_path/breadcrumb.tpl"}
 <!-- display message -->
 {if $pl_blog_post_detail_display_message == 1}
 	<div class="plconf">
@@ -31,15 +31,14 @@
 <!-- display post -->
 {if $pl_blog_post_display_detail == 1}
 	<div id="plpost">
-		<!--<h2>{$pl_blog_post_detail['post_title']|truncate:60}</h2>-->
 		<h1>{$pl_blog_post_detail['post_title']|truncate:60}</h1>
 		<div class="pl_info_post">
-			<div class="plcount_comment">{$pl_blog_post_detail_count_comment}{if $pl_blog_post_detail_count_comment > 1} {l s='Comments' mod='plblog'}{/if}{if $pl_blog_post_detail_count_comment <= 1} {l s='Comment' mod='plblog'}{/if}</div>		
+			<div class="plcount_comment">{$pl_blog_post_detail_count_comment} {if $pl_blog_post_detail_count_comment > 1 or $pl_blog_post_detail_count_comment == 0} {l s='Comments' mod='plblog'}{/if} {if $pl_blog_post_detail_count_comment == 1} {l s='Comment' mod='plblog'}{/if}</div>		
 			<div class="plauthor">{$pl_blog_post_detail['post_date_create']}</div>		
 			<div class="plclear">&nbsp;</div>
 		</div>
 		<div class="plpost_content"><p>{$pl_blog_post_detail['post_description']}</p></div>
-		<div class="plclear">&nbsp;</div>
+		<div class="plclear">&nbsp;</div>        
 	</div>
 {/if}
 <!-- /display post -->
@@ -52,9 +51,10 @@
 {/if}
 <!-- /display tags -->
 
+
 <!-- display comment -->
 <div class="pl_list_comment">
-	<div class="pltitle_comment">{$pl_blog_post_detail_count_comments}{if $pl_blog_post_detail_count_comments <= 1} {l s='Comment' mod='plblog'}{/if}{if $pl_blog_post_detail_count_comments > 1} {l s='Comments' mod='plblog'}{/if}</div>
+	<div class="pltitle_comment">{$pl_blog_post_detail_count_comments}{if $pl_blog_post_detail_count_comments == 1} {l s='Comment' mod='plblog'}{/if}{if $pl_blog_post_detail_count_comments > 1 or $pl_blog_post_detail_count_comments == 0} {l s='Comments' mod='plblog'}{/if}</div>
 	{if $pl_blog_post_detail_display == 1}
 		{foreach from=$pl_blog_post_detail_comments item=comment}
 			<div class="plcomment">

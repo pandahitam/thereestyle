@@ -16,67 +16,32 @@ class CategoryObject extends ObjectModel
 	public $category_meta_keywords;
 	public $link_rewrite;
 	
-	protected $fieldsSize = array('category_url' => 1000);
-	
-	protected $fieldsValidate = array(
-		'category_url' => 'isString',
-		'category_parent' => 'isInt',
-		'category_date_create' => 'isString',
-		'category_status' => 'isBool',
-		'category_allow_comment' => 'isBool'
-	);
-		
-	protected $fieldsRequiredLang = array('link_rewrite');
-		
-	protected $fieldsSizeLang = array(
-		'category_name' => 100,
-		'category_description' => 2000,
-		'category_meta_title' => 500,
-		'category_meta_description' => 1000,
-		'category_meta_keywords' => 1000,
-		'link_rewrite' => 1000
-	);
-	
-	protected $fieldsValidateLang = array(
-		'category_name' => 'isCatalogName',
-		'category_description' => 'isString',
-		'category_meta_title' => 'isCatalogName',
-		'category_meta_description' => 'isCatalogName',
-		'category_meta_keywords' => 'isCatalogName',
-		'link_rewrite' => 'isCatalogName'
-	);
-	
-	protected $table = 'pl_blog_category';
-	
-	protected $identifier = 'id_pl_blog_category';
-		
-	public function getFields()
-	{
-		parent::validateFields();
+	/**
+	 * @see ObjectModel::$definition
+	 */
+	public static $definition = array(
+		'table' => 'pl_blog_category',
+		'primary' => 'id_pl_blog_category',
+		'multilang' => true,
+		'fields' => array(
+			'category_url' => 			array('type' => self::TYPE_STRING, 'validate' => 'isString'),
+			'category_parent' => 		array('type' => self::TYPE_INT, 'validate' => 'isUnsignedInt'),
+			'category_status' => 		array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
+			'position' => 				array('type' => self::TYPE_INT),
+			'category_allow_comment' => array('type' => self::TYPE_BOOL, 'validate' => 'isBool'),
+			'category_date_create' => 	array('type' => self::TYPE_STRING, 'validate' => 'isString'),
+
+			// Lang fields
+			'category_name' => 				array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCatalogName', 'size' => 100),
+/*			'category_description' => 		array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isCleanHtml', 'size' => 2000), */
+			'category_description' => 		array('type' => self::TYPE_HTML, 'lang' => true, 'validate' => 'isString', 'size' => 2000),
+			'category_meta_title' => 		array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 500),
+			'category_meta_description' => 	array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 1000),
+			'category_meta_keywords' => 	array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isGenericName', 'size' => 1000),
+			'link_rewrite' => 				array('type' => self::TYPE_STRING, 'lang' => true, 'validate' => 'isLinkRewrite', 'required' => true, 'size' => 1000),
+		),
+	);	
 			
-		$fields['category_url'] = pSQL($this->category_url);
-		$fields['category_parent'] = pSQL($this->category_parent);
-		$fields['category_date_create'] = pSQL($this->category_date_create);
-		$fields['category_status'] = pSQL($this->category_status);
-		$fields['position'] = ((int) $this->position);
-		$fields['category_allow_comment'] = pSQL($this->category_allow_comment);
-		
-		return $fields;
-	}
-		
-	public function getTranslationsFieldsChild()
-	{
-		parent::validateFieldsLang();
-		return parent::getTranslationsFields(array(
-			'category_name', 
-			'category_description',
-			'category_meta_title',
-			'category_meta_description',
-			'category_meta_keywords',
-			'link_rewrite'
-		));
-	}
-		
 	public function getCategoryById($id_lang = false)
 	{	
 		global $cookie;
@@ -131,29 +96,6 @@ class CategoryObject extends ObjectModel
 		return $rs;
 	}
 		
-	protected function makeTranslationFields(&$fields, &$fieldsArray, $id_language)
-	{
-		global $cookie;
-		
-		$fields[$id_language]['id_lang'] = $id_language;
-		$fields[$id_language][$this->identifier] = (int)($this->id);
-		foreach ($fieldsArray as $field)
-		{
-			/* Check fields validity */
-			if (!Validate::isTableOrIdentifier($field))
-				die(Tools::displayError());
-
-			/* Copy the field, or the default language field if it's both required and empty */
-			if ((!$this->id_lang AND isset($this->{$field}[$id_language]) AND !empty($this->{$field}[$id_language])) 
-			OR ($this->id_lang AND isset($this->$field) AND !empty($this->$field)))
-				$fields[$id_language][$field] = $this->id_lang ? pSQL($this->$field, true) : pSQL($this->{$field}[$id_language], true);
-			elseif (in_array($field, $this->fieldsRequiredLang))
-				$fields[$id_language][$field] = $this->id_lang ? pSQL($this->$field, true) : pSQL($this->{$field}[(($cookie->id_lang != null) ? $cookie->id_lang : Configuration::get('PS_LANG_DEFAULT'))], true);
-			else
-				$fields[$id_language][$field] = '';
-		}
-	}
-	
 	public function toggleStatus()
 	{
 	 	if (!Validate::isTableOrIdentifier($this->identifier) OR !Validate::isTableOrIdentifier($this->table))
@@ -185,7 +127,7 @@ class CategoryObject extends ObjectModel
 		');
 		$id_plposition = $row_plposition['position'];
 		
-		//echo '<script type="text/javascript">alert("'.$id_plposition.' and '.$id_pl_blog_category_position.'");</script>';
+		/*echo '<script type="text/javascript">alert("'.$id_plposition.' and '.$id_pl_blog_category_position.'");</script>'; */
 		
 		Db::getInstance()->ExecuteS('
 			UPDATE '._DB_PREFIX_.'pl_blog_category

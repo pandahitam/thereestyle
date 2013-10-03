@@ -229,7 +229,7 @@ $(function(){ldelim}
 							<sup>*</sup>
 						</p>
 						{elseif $field_name eq "postcode"}
-						<p class="required postcode text">
+						<p class="required text">
 							<label for="postcode">{l s='Zip / Postal Code'}</label>
 							<input type="text" class="text" name="postcode" id="postcode" value="{if isset($smarty.post.postcode)}{$smarty.post.postcode}{/if}" onblur="$('#postcode').val($('#postcode').val().toUpperCase());">
 							<sup>*</sup>
@@ -422,7 +422,7 @@ $(function(){ldelim}
 					<span class="inline-infos">{l s='Apartment, suite, unit, building, floor, etc.'}</span>
 				</p>
 			{elseif $field_name eq "postcode"}
-				<p class="required postcode text">
+				<p class="required text">
 					<label for="postcode">{l s='Zip / Postal Code'}</label>
 					<input type="text" class="text" name="postcode" id="postcode" value="{if isset($smarty.post.postcode)}{$smarty.post.postcode}{/if}" onkeyup="$('#postcode').val($('#postcode').val().toUpperCase());" />
 					<sup>*</sup>

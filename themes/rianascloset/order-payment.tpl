@@ -48,7 +48,7 @@
 	{include file="$tpl_dir./errors.tpl"}
 {else}
 	<div id="opc_payment_methods" class="opc-main-block">
-		{if !$opc}<h1>{l s='Choose your payment method'}</h1>{else}<h2>3. {l s='Choose your payment method'}</h2>{/if}
+		{if !$opc}<h1>{l s='Choose your payment method'}</h1>{else}<h2>3. {l s='Continue'}</h2>{/if}
 
 		<div id="opc_payment_methods-overlay" class="opc-overlay" style="display: none;"></div>
 {/if}

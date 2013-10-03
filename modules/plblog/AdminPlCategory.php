@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__).'/../../classes/AdminTab.php');
+//require_once (dirname(__FILE__).'/../../classes/AdminTab.php');
 require_once (dirname(__FILE__).'/CategoryObject.php');
 
 class AdminPlCategory extends AdminTab
@@ -40,7 +40,8 @@ class AdminPlCategory extends AdminTab
 		$this->loadJS_CSS();
 		//echo 
 		$home = __PS_BASE_URI__.substr($_SERVER['PHP_SELF'], strlen(__PS_BASE_URI__));
-		global $currentIndex, $cookie;
+		global $cookie;
+                $currentIndex = self::$currentIndex;
 		
 		parent::displayForm();
 		/* user post
@@ -84,7 +85,7 @@ class AdminPlCategory extends AdminTab
 			$this->displayRowMultiLang($this->l('Description'), 'category_description', 'textarea', $obj,	null, 90, 10, false);
 			
 			// category allow comment
-			//$this->displayStatus('category_allow_comment', $row['category_allow_comment'], 'Allow comments');
+			$this->displayStatus('category_allow_comment', $row['category_allow_comment'], 'Allow comments');
 			
 			// url friendly
 			$this->displayRowMultiLang($this->l('Friendly URL'), 'link_rewrite', 'text', $obj, null, null, null, false, '<>;=#{}', $link_rewrite = false, $str2url = true);
@@ -110,6 +111,37 @@ class AdminPlCategory extends AdminTab
 				</div>
 				<div class="small"><sup>*</sup> '.$this->l('Required field').'</div>		
 			</fieldset>
+                        <script type="text/javascript" src="'.__PS_BASE_URI__.'js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
+        tinyMCE.init({
+                mode : "specific_textareas",
+		theme : "advanced",
+		skin:"cirkuit",
+		editor_selector : "rte",
+		editor_deselector : "noEditor",
+		plugins : "safari,pagebreak,style,table,advimage,advlink,inlinepopups,media,contextmenu,paste,fullscreen,xhtmlxtras,preview",
+		// Theme options
+		theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,,|,forecolor,backcolor",
+		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,media,|,ltr,rtl,|,fullscreen",
+		theme_advanced_buttons4 : "styleprops,|,cite,abbr,acronym,del,ins,attribs,pagebreak",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_resizing : true,
+		content_css : pathCSS+"global.css",
+		document_base_url : ad,
+		width: "600",
+		height: "auto",
+		font_size_style_values : "8pt, 10pt, 12pt, 14pt, 18pt, 24pt, 36pt",
+		elements : "nourlconvert,ajaxfilemanager",
+		file_browser_callback : "ajaxfilemanager",
+		entity_encoding: "raw",
+		convert_urls : false,
+		language : iso
+				});
+				id_language = Number('.$this->context->language->id.');
+			</script>
 		</form>
 		<p class="clear"></p>';
 	}
@@ -266,7 +298,7 @@ class AdminPlCategory extends AdminTab
 	
 	public function displayList()
 	{
-		global $currentIndex;
+		$currentIndex = self::$currentIndex;
 
 		$this->displayTop();
 
@@ -289,7 +321,7 @@ class AdminPlCategory extends AdminTab
 	}
 	
 	
-	public function getList($id_lang, $orderBy = NULL, $orderWay = NULL, $start = 0, $limit = NULL)
+	public function getList($id_lang, $orderBy = NULL, $orderWay = NULL, $start = 0, $limit = NULL, $id_lang_shop = false)
 	{
 		global $cookie;
 		parent::getList((int)($cookie->id_lang), !$cookie->__get($this->table.'Orderby') ? 'position' : NULL, !$cookie->__get($this->table.'Orderway') ? 'ASC' : NULL);	
@@ -297,7 +329,8 @@ class AdminPlCategory extends AdminTab
 	
 	public function displayListContent($token = NULL)
 	{
-		global $currentIndex, $cookie;
+		global $cookie;
+                $currentIndex = self::$currentIndex;
 		$currency = new Currency(Configuration::get('PS_CURRENCY_DEFAULT'));
 
 		$id_category = 1; // default categ
@@ -444,7 +477,7 @@ class AdminPlCategory extends AdminTab
 	
 	protected function _displayDeleteLink($token = NULL, $id)
 	{
-	    global $currentIndex;
+	    $currentIndex = self::$currentIndex;
 
 		$_cacheLang['Delete'] = $this->l('Delete');
 		$_cacheLang['DeleteItem'] = $this->l('If you delete this category then all articles of this category will be deleted. Delete item #', __CLASS__, TRUE, FALSE);

@@ -10,13 +10,17 @@ class DetailsController extends FrontController
 			$this->php_self = "blog/".Tools::getValue('plcn').'/'.Tools::getValue('plidp').'-'.Tools::getValue('plpn').".html";
 		parent::__construct();
 	}
-	
+	public function init()
+	{
+		parent::init();
+	}
+	/*
 	public function displayContent()
 	{
 		parent::displayContent();
 		
 		$this->display();
-	}
+	}*/
 	
 	public function getCategoryNameRewrite($id_pl_blog_category)
 	{
@@ -27,7 +31,199 @@ class DetailsController extends FrontController
 		');
 	}
 	
-	function display()
+	function initContent()
+	{
+		parent::initContent();
+		
+		global $smarty, $link, $cookie;		
+		$pl_path = array();				
+		session_start();		
+		if (isset($_SESSION['pl_a_path']) && null != $_SESSION['pl_a_path']) {
+			$pl_path[0]['link'] = $_SESSION['pl_a_path'];
+		} else {
+			$pl_path[0]['link'] = $link->getPageLink('').'blog/all-post.html';
+		}
+		if (isset($_SESSION['pl_a_name']) && null != $_SESSION['pl_a_name']) {
+			$pl_path[0]['name'] = $_SESSION['pl_a_name'];
+		} else {
+			$pl_path[0]['name'] = 'View all post';
+		}
+		$pl_path[1]['link'] = "http://";		
+		$pl_path[1]['name'] = Db::getInstance()->getValue("			SELECT post_title FROM "._DB_PREFIX_."pl_blog_post_lang			WHERE id_lang = ".(($cookie->id_lang != null) ? $cookie->id_lang : Configuration::get("PS_LANG_DEFAULT"))." AND id_pl_blog_post = ".Tools::getValue("plidp")."		");
+		$this->context->smarty->assign('pl_path', $pl_path);
+		//$smarty->display(_PS_MODULE_DIR_.'plblog/frontent/tpl/breadcrumb.tpl');
+		$this->context->smarty->assign('module_path', _PS_MODULE_DIR_.'plblog/frontent/tpl');
+		
+		$id_pl_blog_post = Tools::getValue('plidp');		
+		$this->comments = $this->getCommentBy($id_pl_blog_post);
+		
+		/* load javascript, css*/
+		$this->context->smarty->assign('pl_blog_post_detail_path_tinymce', __PS_BASE_URI__.'modules/plblog/frontent/js/jscripts/tiny_mce/tiny_mce.js');
+		$this->context->smarty->assign('pl_blog_post_detail_path_css', __PS_BASE_URI__.'modules/plblog/frontent/css/style.css');
+		/* -load javascript, css*/
+		
+		$data = false; 
+		$plmsg = null;
+
+		$this->context->smarty->assign('pl_blog_post_detail_display_message', '');
+		if (Configuration::get('PL_SHOW_CAPTCHA_TO_COMMENT') == 1)
+		{
+			if (Tools::getValue('plsubmitcomment') == 'true')
+			{
+				$checkForm = $this->checkForm(Tools::getValue('author_name'), Tools::getValue('author_email'), Tools::getValue('comment_content'));	
+		
+				// capcha
+				if( $_SESSION['security_code'] == $_POST['security_code'] && !empty($_SESSION['security_code'] ) ) 
+				{
+					/* display message */
+					if ($checkForm)
+						$data = $this->addComment();
+					else
+						$data = 0;
+					$this->context->smarty->assign('pl_blog_post_detail_display_message', $data);
+					$this->context->smarty->assign('pl_blog_post_detail_message', __PS_BASE_URI__.'/img/admin/ok2.png');
+					/* -display message */
+					
+					unset($_SESSION['security_code']);
+				} else 
+				{
+					$_POST['plsecurity_code_msg'] = 'Invalid Security Code';
+				}
+			}
+		}
+		else
+		{
+			/* display message */
+			$checkForm = $this->checkForm(Tools::getValue('author_name'), Tools::getValue('author_email'), Tools::getValue('comment_content'));	
+			if ($checkForm)
+				$data = $this->addComment();
+			else
+				$data = 0;
+				
+			$this->context->smarty->assign('pl_blog_post_detail_display_message', $data);
+			$this->context->smarty->assign('pl_blog_post_detail_message', __PS_BASE_URI__.'/img/admin/ok2.png');
+			/* -display message */
+		}		
+		
+		/* display post content */
+		$id_pl_blog_post = Tools::getValue('plidp');
+			
+		$post = $this->getPostById($id_pl_blog_post);
+		
+		if ($post != null)
+		{
+			$this->context->smarty->assign('pl_blog_post_display_detail', 1);
+			$count_comment = count($this->comments);
+			$this->context->smarty->assign('pl_blog_post_detail_count_comment', $count_comment);
+			$this->context->smarty->assign('pl_blog_post_detail', $post);
+			
+			if (Configuration::get('PL_TBEP_SHOW') == 'YES')
+			{
+				$this->context->smarty->assign('pl_display_tags', 1);
+				$url_rewrite = Configuration::get('PS_REWRITING_SETTINGS');
+				$home = $link->getPageLink('');		
+				$pl_data_tags = $this->getTags($post['id_pl_blog_post']);
+				
+				$this->context->smarty->assign('url_rewrite', $url_rewrite);
+				$this->context->smarty->assign('home', $home);
+				$this->context->smarty->assign('pl_data_tags', $pl_data_tags);
+				$this->context->smarty->assign('_PS_MODULE_DIR_', _PS_MODULE_DIR_);
+			}
+			else
+			{
+				$this->context->smarty->assign('pl_display_tags', 0);
+			}
+		}
+		else
+		{
+			$this->context->smarty->assign('pl_blog_post_display_detail', 0);
+		}
+		$allow = array();
+		//$allow['id_pl_blog_category'] = $post['id_pl_blog_category'];
+		
+		if ($post['post_allow_comment'] == 1)
+			$allow['post_allow_comment'] = 1;
+		/* -display post content */
+		
+		/* display comment */
+		$this->context->smarty->assign('pl_blog_post_detail_count_comments', count($this->comments));
+		
+		if ($this->comments != null)
+		{
+			$this->context->smarty->assign('pl_blog_post_detail_display', 1);
+			$this->context->smarty->assign('pl_blog_post_detail_comments', $this->comments);
+		}
+		else
+		{
+			$this->context->smarty->assign('pl_blog_post_detail_display', 0);
+		}
+		/* -display comment */
+		
+		// return category allow comment
+//		$category_allow_comment = Db::getInstance()->getValue("
+//			SELECT category_allow_comment
+//			FROM "._DB_PREFIX_."pl_blog_category
+//			WHERE id_pl_blog_category=".$allow['id_pl_blog_category']."
+//		");
+		//var_dump($this->allowComment());die();
+		if (/*$category_allow_comment && */$allow['post_allow_comment'] && $this->allowComment()) 
+		{
+			$this->context->smarty->assign('pl_blog_post_detail_display_form', 1);
+			if (Tools::getValue('pl_comment_error') == 'true')
+				$this->context->smarty->assign('pl_comment_error', 1);
+			else
+				$this->context->smarty->assign('pl_comment_error', 0);
+				
+			if (Tools::getValue('plauthor_name_msg') != null)
+				$this->context->smarty->assign('plauthor_name_msg', 1);
+			else 
+				$this->context->smarty->assign('plauthor_name_msg', 0);
+						
+			if (Tools::getValue('plauthor_email_msg') != null)
+				$this->context->smarty->assign('plauthor_email_msg', 1);
+			else 
+				$this->context->smarty->assign('plauthor_email_msg', 0);
+							
+			if (Tools::getValue('plcomment_content_msg') != null)
+				$this->context->smarty->assign('plcomment_content_msg', 1);
+			else 
+				$this->context->smarty->assign('plcomment_content_msg', 0);
+				
+			if (Tools::getValue('plsecurity_code_msg') != null)
+				$this->context->smarty->assign('plsecurity_code_msg', 1);
+			else 
+				$this->context->smarty->assign('plsecurity_code_msg', 0);
+				
+			$this->context->smarty->assign('plauthor_name_msg_content', Tools::getValue('plauthor_name_msg'));
+			$this->context->smarty->assign('plauthor_email_msg_content', Tools::getValue('plauthor_email_msg'));
+			$this->context->smarty->assign('plcomment_content_msg_content', Tools::getValue('plcomment_content_msg'));
+			$this->context->smarty->assign('plsecurity_code_msg_content', Tools::getValue('plsecurity_code_msg'));
+			
+			$this->context->smarty->assign('author_name', Tools::getValue('author_name'));
+			$this->context->smarty->assign('author_email', Tools::getValue('author_email'));
+			$this->context->smarty->assign('comment_content', Tools::getValue('comment_content'));
+			
+			/* display captcha */
+			if (Configuration::get('PL_SHOW_CAPTCHA_TO_COMMENT') == 1)
+			{
+				$this->context->smarty->assign('pl_display_captcha', 1);
+			}
+			else
+			{
+				$this->context->smarty->assign('pl_display_captcha', 0);
+			}
+			$this->context->smarty->assign('pl_ps_base_uri', __PS_BASE_URI__);
+			/* -display captcha */
+		}
+		else
+		{
+			$this->context->smarty->assign('pl_blog_post_detail_display_form', 0);
+		}
+		
+		$this->setTemplate(_PS_MODULE_DIR_.'plblog/frontent/tpl/post-detail.tpl');
+	}
+	
+	function displayU()
 	{
 		global $smarty, $link, $cookie;		
 		$pl_path = array();				
@@ -35,13 +231,12 @@ class DetailsController extends FrontController
 		$pl_path[0]['link'] = $_SESSION['pl_a_path'] == null ? ($link->getPageLink('').'blog/all-post.html') : $_SESSION['pl_a_path'];		
 		$pl_path[0]['name'] = $_SESSION['pl_a_name'] == null ? 'View all post' : $_SESSION['pl_a_name'];				
 		$pl_path[1]['link'] = "http://";		
-		$pl_path[1]['name'] = Db::getInstance()->getValue("SELECT post_title FROM "._DB_PREFIX_."pl_blog_post_lang WHERE id_lang = ".(($cookie->id_lang != null) ? $cookie->id_lang : Configuration::get("PS_LANG_DEFAULT"))." AND id_pl_blog_post = ".Tools::getValue("plidp")."		");
+		$pl_path[1]['name'] = Db::getInstance()->getValue("			SELECT post_title FROM "._DB_PREFIX_."pl_blog_post_lang			WHERE id_lang = ".(($cookie->id_lang != null) ? $cookie->id_lang : Configuration::get("PS_LANG_DEFAULT"))." AND id_pl_blog_post = ".Tools::getValue("plidp")."		");
 		$smarty->assign('pl_path', $pl_path);
 		$smarty->display(_PS_MODULE_DIR_.'plblog/frontent/tpl/breadcrumb.tpl');
 		
 		$id_pl_blog_post = Tools::getValue('plidp');		
-		$this->
-		ents = $this->getCommentBy($id_pl_blog_post);
+		$this->comments = $this->getCommentBy($id_pl_blog_post);
 		
 		/* load javascript, css*/
 		$smarty->assign('pl_blog_post_detail_path_tinymce', __PS_BASE_URI__.'modules/plblog/frontent/js/jscripts/tiny_mce/tiny_mce.js');
@@ -67,7 +262,7 @@ class DetailsController extends FrontController
 					else
 						$data = 0;
 					$smarty->assign('pl_blog_post_detail_display_message', $data);
-					//$smarty->assign('pl_blog_post_detail_message', __PS_BASE_URI__.'/img/admin/ok2.png');
+					$smarty->assign('pl_blog_post_detail_message', __PS_BASE_URI__.'/img/admin/ok2.png');
 					/* -display message */
 					
 					unset($_SESSION['security_code']);
@@ -99,7 +294,7 @@ class DetailsController extends FrontController
 		if ($post != null)
 		{
 			$smarty->assign('pl_blog_post_display_detail', 1);
-			$count_comment = count($this->ents);
+			$count_comment = count($this->comments);
 			$smarty->assign('pl_blog_post_detail_count_comment', $count_comment);
 			$smarty->assign('pl_blog_post_detail', $post);
 			
@@ -132,12 +327,12 @@ class DetailsController extends FrontController
 		/* -display post content */
 		
 		/* display comment */
-		$smarty->assign('pl_blog_post_detail_count_comments', count($this->ents));
+		$smarty->assign('pl_blog_post_detail_count_comments', count($this->comments));
 		
-		if ($this->ents != null)
+		if ($this->comments != null)
 		{
 			$smarty->assign('pl_blog_post_detail_display', 1);
-			$smarty->assign('pl_blog_post_detail_comments', $this->ents);
+			$smarty->assign('pl_blog_post_detail_comments', $this->comments);
 		}
 		else
 		{
@@ -205,12 +400,15 @@ class DetailsController extends FrontController
 		{
 			$smarty->assign('pl_blog_post_detail_display_form', 0);
 		}
-		//print_r($this->ents);
+		
 		$smarty->display(_PS_MODULE_DIR_.'plblog/frontent/tpl/post-detail.tpl');
 	}
 	
-	protected function canonicalRedirection()
-	{
+    
+    protected function canonicalRedirection($canonical_url = '')
+    {
+        return true;
+
 		global $link, $cookie;
 
 		if (Configuration::get('PS_CANONICAL_REDIRECT'))
@@ -221,16 +419,16 @@ class DetailsController extends FrontController
 				// $_SERVER['HTTP_HOST'] must be replaced by the real canonical domain
 				$canonicalURL = $link->getPageLink($this->php_self, $this->ssl, $cookie->id_lang);
 				if (!preg_match('/^'.Tools::pRegexp($canonicalURL, '/').'([&?].*)?$/', (($this->ssl AND Configuration::get('PS_SSL_ENABLED')) ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']))
-				{
+                {
 					header('HTTP/1.0 301 Moved');
 					if (defined('_PS_MODE_DEV_') AND _PS_MODE_DEV_ AND $_SERVER['REQUEST_URI'] != __PS_BASE_URI__)
-						die('[Debug] This page has moved<br />Please use the following URL instead: <a href="'.$canonicalURL.'">'.$canonicalURL.'</a>');
-					Tools::redirectLink($canonicalURL);
+						die('[Debugas] This page has moved<br />Please use the following URL instead: <a href="'.$canonicalURL.'">'.$canonicalURL.'</a>');
+                    Tools::redirectLink($canonicalURL);
 				}
 			}
 		}
 	}
-	
+
 	public function getTags($id_pl_blog_post)
 	{
 		global $cookie;
@@ -243,7 +441,7 @@ class DetailsController extends FrontController
 		return $data;
 	}
 	
-	public function displayHeader()
+	public function displayHeader($display = true)
 	{
 		global $css_files, $js_files;
 
@@ -267,7 +465,12 @@ class DetailsController extends FrontController
 		self::$smarty->assign(array(
 			'HOOK_HEADER' => Module::hookExec('header'),
 			'HOOK_TOP' => Module::hookExec('top'),
-			'HOOK_LEFT_COLUMN' => Module::hookExec('leftColumn')
+			'HOOK_LEFT_COLUMN' => Module::hookExec('leftColumn'),
+			'HOOK_MY_USER_INFO' => Module::hookExec('myUserInfo'),
+			'HOOK_MY_SEARCH' => Module::hookExec('mySearch'),
+			'HOOK_MY_PERMALINKS' => Module::hookExec('myPermalinks'),
+			'HOOK_MY_RESPONSIVELINK' => Module::hookExec('myResponsivelink'),
+			'HOOK_MY_SLIDESHOW' => Module::hookExec('mySlideshow')
 		));
 
 		if ((Configuration::get('PS_CSS_THEME_CACHE') OR Configuration::get('PS_JS_THEME_CACHE')) AND is_writable(_PS_THEME_DIR_.'cache'))
@@ -325,9 +528,8 @@ class DetailsController extends FrontController
 				LEFT JOIN '._DB_PREFIX_.'pl_blog_comment_lang b
 				ON (a.id_pl_blog_comment=b.id_pl_blog_comment) 
 				WHERE b.id_lang='.(($cookie->id_lang != null) ? $cookie->id_lang : Configuration::get("PS_LANG_DEFAULT")).' AND '.' (a.comment_status=2) AND (id_pl_blog_post='.$id_pl_blog_post.')';
+		
 		return (Db::getInstance()->ExecuteS($sql));
-		//$db = Db::getInstance()->ExecuteS($sql);
-		//var_dump($db);
 	}
 	
 	function getMetaPostById($id_pl_blog_post)

@@ -5,27 +5,30 @@ class AdminPlTags extends AdminTab
 	function __construct()
 	{
 		$this->className = 'TagsObject';
-		$this->table = 'pl_blog_tags';
+		$this->table = 'pl_blog_tags';
 		$this->lang = true;
 		$this->edit = false;
 		$this->delete = true;
-				global $cookie;
-				$this->_filter = 'AND tags_date_create IS NOT NULL';		
+		
+		global $cookie;
+		
+		$this->_filter = 'AND tags_date_create IS NOT NULL';
+		
 		$this->fieldsDisplay = array(
 								'id_pl_blog_tags' => array('title' => $this->l('ID'), 'align' => 'center', 'width' => 25),
 								'tags_name' => array('title' => $this->l('Name'), 'width' => 200),
 								'tags_date_create' => array('title' => $this->l('Date create'), 'width' =>100)					
-								);
+								);
 		parent::__construct();
-	}
+	}
 	function displayForm($isMainTab = true)
 	{
 		$this->loadJS_CSS();
 		$home = __PS_BASE_URI__.substr($_SERVER['PHP_SELF'], strlen(__PS_BASE_URI__));
-		global $currentIndex;
-		parent::displayForm();
-		$obj = $this->loadObject(true);
-		$row = $obj->getTagsById();
+		$currentIndex = self::$currentIndex;
+		parent::displayForm();
+		$obj = $this->loadObject(true);
+		$row = $obj->getTagsById();
 		echo '
 		<form action="'.$currentIndex.'&submitAdd'.$this->table.'=1&token='.$this->token.'" method="post" enctype="multipart/form-data">
 		'.($obj->id ? '<input type="hidden" name="id_'.$this->table.'" value="'.$obj->id.'" />' : '').'
@@ -64,7 +67,7 @@ class AdminPlTags extends AdminTab
 		}
 		
 		echo $_date;
-	}	
+	}	
 	function displaySelection($title = null, $name = null, $selected = null, $rows = null, $value = null, $display_name = null, $width = null, $height = null)
 	{
 		echo '<label>'.$this->l($title).' </label>
@@ -163,9 +166,10 @@ class AdminPlTags extends AdminTab
 			</script>
 			<script type="text/javascript" src="'.__PS_BASE_URI__.'js/tiny_mce/tiny_mce.js"></script>
 			<script type="text/javascript" src="'.__PS_BASE_URI__.'js/tinymce.inc.js"></script>';
-	}
+	}
 	function display()
-	{		echo '<fieldset style="background-color:white !important; margin-bottom:25px !important;"><legend>'.$this->l('Manage Tags').'</legend>';
+	{
+		echo '<fieldset style="background-color:white !important; margin-bottom:25px !important;"><legend>'.$this->l('Manage Tags').'</legend>';
 		parent::display();
 		echo '</fieldset>';
 	}

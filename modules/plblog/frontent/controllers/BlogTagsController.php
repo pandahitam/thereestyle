@@ -9,7 +9,11 @@ class BlogTagsController extends FrontController
 			$this->php_self = 'blog/tag/'.Tools::getValue('pltn').'_'.Tools::getValue('plidt').'.html';
 		parent::__construct();
 	}
-	
+	public function init()
+	{
+		parent::init();
+	}
+	/*
 	public function displayContent()
 	{
 		parent::displayContent();
@@ -27,7 +31,7 @@ class BlogTagsController extends FrontController
 		// P3P Policies (http://www.w3.org/TR/2002/REC-P3P-20020416/#compact_policies)
 		header('P3P: CP="IDC DSP COR CURa ADMa OUR IND PHY ONL COM STA"');
 
-		/* Hooks are volontary out the initialize array (need those variables already assigned) */
+		/* Hooks are volontary out the initialize array (need those variables already assigned) *
 		self::$smarty->assign(array(
 			'time' => time(),
 			'img_update_time' => Configuration::get('PS_IMG_UPDATE_TIME'),
@@ -41,7 +45,12 @@ class BlogTagsController extends FrontController
 		self::$smarty->assign(array(
 			'HOOK_HEADER' => Module::hookExec('header'),
 			'HOOK_TOP' => Module::hookExec('top'),
-			'HOOK_LEFT_COLUMN' => Module::hookExec('leftColumn')
+			'HOOK_LEFT_COLUMN' => Module::hookExec('leftColumn'),
+			'HOOK_MY_USER_INFO' => Module::hookExec('myUserInfo'),
+			'HOOK_MY_SEARCH' => Module::hookExec('mySearch'),
+			'HOOK_MY_PERMALINKS' => Module::hookExec('myPermalinks'),
+			'HOOK_MY_RESPONSIVELINK' => Module::hookExec('myResponsivelink'),
+			'HOOK_MY_SLIDESHOW' => Module::hookExec('mySlideshow')
 		));
 
 		if ((Configuration::get('PS_CSS_THEME_CACHE') OR Configuration::get('PS_JS_THEME_CACHE')) AND is_writable(_PS_THEME_DIR_.'cache'))
@@ -54,7 +63,7 @@ class BlogTagsController extends FrontController
 			if (Configuration::get('PS_JS_THEME_CACHE'))
 				Tools::cccJs();
 		}
-		/*pl*/
+		/*pl*
 		$tags_name = Tools::getValue('pltn');
 		self::$smarty->assign('meta_title', $tags_name.' - Blog ');
 		
@@ -77,11 +86,11 @@ class BlogTagsController extends FrontController
 			// $category_name = 'List post';
 			// self::$smarty->assign('meta_title', $category_name.' - Blog ');
 		// }
-		/* -pl */
+		/* -pl *
 		self::$smarty->assign('css_files', $css_files);
 		self::$smarty->assign('js_files', array_unique($js_files));
 		self::$smarty->display(_PS_THEME_DIR_.'header.tpl');
-	}
+	}*/
 	
 	function getCurrentURL()
 	{
@@ -147,7 +156,71 @@ class BlogTagsController extends FrontController
 		$_SESSION['pl_a_name'] = $name;
 	}
 	
-	function display()
+	function initContent()
+	{
+		parent::initContent();
+		
+		global $smarty, $link, $cookie;		
+		$pl_path = array();
+		
+		$url_rewrite = Configuration::get('PS_REWRITING_SETTINGS');
+		$pl_path[0]['link'] = 'http://';
+		$name = Db::getInstance()->getValue("
+			SELECT tags_name FROM "._DB_PREFIX_."pl_blog_tags_lang
+			WHERE id_lang = ".$cookie->id_lang." AND id_pl_blog_tags = ".Tools::getValue("plidt")."
+		");
+		$pl_path[0]['name'] = $name;
+		$this->setPath($name);
+		
+		$this->context->smarty->assign('pl_path', $pl_path);
+		//$smarty->display(_PS_MODULE_DIR_.'plblog/frontent/tpl/breadcrumb.tpl');
+		$this->context->smarty->assign('module_path', _PS_MODULE_DIR_.'plblog/frontent/tpl');
+		
+		$sql = 'SELECT * FROM '._DB_PREFIX_.'pl_blog_post a
+				LEFT JOIN '._DB_PREFIX_.'pl_blog_post_lang b
+				ON (a.id_pl_blog_post= b.id_pl_blog_post)
+				LEFT JOIN '._DB_PREFIX_.'pl_blog_post_tag c
+				ON (a.id_pl_blog_post = c.id_pl_blog_post)
+				WHERE (a.post_status=1) AND (b.id_lang='.(($cookie->id_lang != null) ? $cookie->id_lang : Configuration::get('PS_LANG_DEFAULT')).')  AND c.id_pl_tag='.Tools::getValue('plidt');		
+		$result = Db::getInstance()->ExecuteS($sql);
+		$this->pagination(count($result));
+		
+		/* load javascript, css */
+		$this->context->smarty->assign('_MODULE_DIR_', _MODULE_DIR_);
+		/* -load javascript, css */
+		
+		/* display title */
+		$this->context->smarty->assign('pl_tag_name', $this->getTagName(Tools::getValue('plidt')));
+		/* -display title */
+		
+		$page = (int)Tools::getValue('p');
+		if ($page == null)
+			$page = 0;
+			
+		$postes = $this->getPostes($page);
+		
+		
+		/* display post list */
+		if ($postes != null)
+		{
+			$this->context->smarty->assign('pl_postes_empty', 0);
+			$this->context->smarty->assign('pl_post_list', $postes);
+        }
+		else
+		{
+			$this->context->smarty->assign('pl_postes_empty', 1);
+		}
+		/* -display post list */
+		
+		require_once _PS_MODULE_DIR_.'plblog/frontent/tools/PlTools.php';		
+		$plTools = new PlTools();		$this->context->smarty->assign('plTools', $plTools);
+		
+		//$smarty->display(_PS_MODULE_DIR_.'plblog/frontent/tpl/post-tag.tpl');
+		//$smarty->display(_PS_MODULE_DIR_.'plblog/frontent/tpl/pagination.tpl');
+		$this->setTemplate(_PS_MODULE_DIR_.'plblog/frontent/tpl/post-tag.tpl');
+	}
+
+	function displayU()
 	{
 		global $smarty, $link, $cookie;		
 		$pl_path = array();
@@ -209,6 +282,8 @@ class BlogTagsController extends FrontController
 
 	protected function canonicalRedirection()
 	{
+        return true;
+
 		global $link, $cookie;
 
 		if (Configuration::get('PS_CANONICAL_REDIRECT'))

@@ -1,5 +1,7 @@
+{include file="$module_path/breadcrumb.tpl"}
+
 <!-- display title -->
-<!--<h1>{l s='All Posts' mod='plblog'}</h1>-->
+<h1>{l s='All Posts' mod='plblog'}</h1>
 <!-- /display title -->
 
 
@@ -10,20 +12,16 @@
 		{$l = $plTools->getPostLink($post['id_pl_blog_post'], $post['link_rewrite'], $post['id_pl_blog_category'])}
 		{$count_comment = $plTools->getCountComment($post['id_pl_blog_post'])}
 		{$post_content = $plTools->substr($post['post_description'], 0, 1000)}	
-		{$post_thumbnail = $plTools->getThumbnail($post['post_description'])}	
 			<!-- post -->
 			<div id="plpost">
-				<div class="pltitle"><h1 style="padding-bottom: 7px;"><a href="{$l}">{$post['post_title']}</a></h1></div>
+				<div class="pltitle"><h1>{$post['post_title']}</h1></div>
+				<div class="plpost_content"><p>{$post['post_description']|strip_tags|truncate:{$pl_b_summary_character_count}}</p></div>
+				<div class="plread_more"><a href="{$l}">{l s='Read more' mod='plblog'}</a></div>
 				<div class="pl_info_post">
-					<div class="plcount_comment">{$count_comment}{if $count_comment > 1} Comments{/if}{if $count_comment <= 1}{l s=' Comment' mod='plblog'}{/if}</div>		
+					<div class="plcount_comment">{$count_comment} {if $count_comment > 1 or $count_comment == 0}{l s='Comments' mod='plblog'}{/if}{if $count_comment == 1}{l s='Comment' mod='plblog'}{/if}</div>		
 					<div class="plauthor">{$post['post_date_create']}</div>		
 					<div class="plclear">&nbsp;</div>
 				</div>
-				{if $post_thumbnail != ''}
-				<div class="plpost_thumbnail" style="background-image: url('{$post_thumbnail}')"></div>
-				{/if}
-				<div class="plpost_content"><p>{$post['post_description']|strip_tags|truncate:{$pl_b_summary_character_count}}</p></div>
-				<div class="plread_more"><a href="{$l}">{l s='Read more' mod='plblog'}</a></div>
 			</div>
 			<!-- /post -->
 	{/foreach}
@@ -32,3 +30,4 @@
 	{l s='There are no posts' mod='plblog'}
 {/if}
 <!-- /display post list -->
+{*include file="$module_path/pagination.tpl"*}

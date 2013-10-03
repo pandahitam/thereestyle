@@ -1,5 +1,5 @@
 <?php
-require_once (dirname(__FILE__).'/../../classes/AdminTab.php');
+//require_once (dirname(__FILE__).'/../../classes/AdminTab.php');
 require_once (dirname(__FILE__).'/PostObject.php');
 require_once (dirname(__FILE__).'/CategoryObject.php');
 
@@ -32,7 +32,7 @@ class AdminPlPost extends AdminTab
 		$this->loadJS_CSS();
 		//echo 
 		$home = __PS_BASE_URI__.substr($_SERVER['PHP_SELF'], strlen(__PS_BASE_URI__));
-		global $currentIndex;
+		$currentIndex = self::$currentIndex;
 		parent::displayForm();
 		
 		$this->displayErrors();
@@ -99,13 +99,49 @@ class AdminPlPost extends AdminTab
 			$this->displayDate('post_date_create', $row['post_date_create']);
 			
 			// buton submit
-			echo'
-				<div class="margin-form">
+		/*echo'
+				<label>'.$this->l('Image:').' </label>
+				<div class="margin-form">';
+		echo		$this->displayImage($obj->id, dirname(__FILE__).'/images/'.$obj->id.'.jpg', 350, NULL, NULL, true);
+		echo '	<br /><input type="file" name="logo" />
+					<p>'.$this->l('Upload image from your computer').'</p>
+				</div>';*/
+		echo '	<div class="margin-form">
 					<input type="submit" value="'.$this->l('   Save   ').'" name="submitAdd'.$this->table.'" class="button" />
 				</div>
 				<div class="small">'.$this->l('').'</div>
 				';			
-			echo'</fieldset>
+			echo'</fieldset>                            
+		<script type="text/javascript">
+        tinyMCE.init({
+                mode : "specific_textareas",
+		theme : "advanced",
+		skin:"cirkuit",
+		editor_selector : "rte",
+		editor_deselector : "noEditor",
+		plugins : "safari,pagebreak,style,table,advimage,advlink,inlinepopups,media,contextmenu,paste,fullscreen,xhtmlxtras,preview",
+		// Theme options
+		theme_advanced_buttons1 : "newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,,|,forecolor,backcolor",
+		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,media,|,ltr,rtl,|,fullscreen",
+		theme_advanced_buttons4 : "styleprops,|,cite,abbr,acronym,del,ins,attribs,pagebreak",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_resizing : true,
+		content_css : pathCSS+"global.css",
+		document_base_url : ad,
+		width: "600",
+		height: "auto",
+		font_size_style_values : "8pt, 10pt, 12pt, 14pt, 18pt, 24pt, 36pt",
+		elements : "nourlconvert,ajaxfilemanager",
+		file_browser_callback : "ajaxfilemanager",
+		entity_encoding: "raw",
+		convert_urls : false,
+		language : iso
+				});
+				id_language = Number('.$this->context->language->id.');
+			</script>
 		</form>';
 	}
 	
@@ -169,7 +205,7 @@ class AdminPlPost extends AdminTab
 				if ($type != 'textarea' )
 					echo '<input '.($str2url == true ? ' onchange="this.value=str2url(this.value)"' : '').' '.($url_rewrite == true ? 'onkeyup="copy2friendlyURL();"' : '').' type="'.$type.'" name="'.$name.'_'.$language['id_lang'].'" id="'.$name.'_'.$language['id_lang'].'" '.(is_string($obj) ? ' value="'.$obj.'" ' : ' value="'.htmlentities($obj->getTags((int)($language['id_lang']))).'" ').'/>';			
 				else
-					echo '<textarea class="rte" '.$d_cols.' '.$d_rows.' name="'.$name.'_'.$language['id_lang'].'">'.htmlentities($obj->getTags((int)($language['id_lang']))).'</textarea>';
+					echo '<textarea class="rte autoload_rte " '.$d_cols.' '.$d_rows.' name="'.$name.'_'.$language['id_lang'].'">'.htmlentities($obj->getTags((int)($language['id_lang']))).'</textarea>';
 				echo $sub_s.($str_help_box != null ? '<span class="hint" name="help_box">'.$this->l('Invalid characters:').' '.$str_help_box.'<span class="hint-pointer">&nbsp;</span></span>' : '').'</div>';
 		}
 		echo '<p class="clear">'.$note.'</p>';
@@ -201,7 +237,7 @@ class AdminPlPost extends AdminTab
 				if ($type != 'textarea' )
 					echo '<input '.($str2url == true ? ' onchange="this.value=str2url(this.value)"' : '').' '.($url_rewrite == true ? 'onkeyup="copy2friendlyURL();"' : '').' type="'.$type.'" name="'.$name.'_'.$language['id_lang'].'" id="'.$name.'_'.$language['id_lang'].'" '.(is_string($obj) ? ' value="'.$obj.'" ' : ' value="'.htmlentities($this->getFieldValue($obj, $name, (int)($language['id_lang'])), ENT_COMPAT, 'UTF-8').'" ').'/>';			
 				else
-					echo '<textarea class="rte" '.$d_cols.' '.$d_rows.' name="'.$name.'_'.$language['id_lang'].'">'.htmlentities($this->getFieldValue($obj, $name, (int)($language['id_lang'])), ENT_COMPAT, 'UTF-8').'</textarea>';
+					echo '<textarea class="rte autoload_rte" '.$d_cols.' '.$d_rows.' name="'.$name.'_'.$language['id_lang'].'">'.htmlentities($this->getFieldValue($obj, $name, (int)($language['id_lang'])), ENT_COMPAT, 'UTF-8').'</textarea>';
 				echo $sub_s.($str_help_box != null ? '<span class="hint" name="help_box">'.$this->l('Invalid characters:').' '.$str_help_box.'<span class="hint-pointer">&nbsp;</span></span>' : '').'</div>';
 		}
 		echo '<p class="clear">'.$note.'</p>';
@@ -240,7 +276,7 @@ class AdminPlPost extends AdminTab
 		return $date['year'].'/'.$date['mon'].'/'.$date['mday'].' '.$date['hours'].':'.$date['minutes'].':'.$date['seconds'];
 	}
 	
-	public function getList($id_lang, $orderBy = NULL, $orderWay = NULL, $start = 0, $limit = NULL)
+	public function getList($id_lang, $orderBy = NULL, $orderWay = NULL, $start = 0, $limit = NULL, $id_lang_shop = false)
 	{
 		//parent::getList($id_lang, $this->_orderBy, $this->_orderWay, $start, $limit);
 		
@@ -339,7 +375,7 @@ class AdminPlPost extends AdminTab
 	
 	public function displayList()
 	{
-		global $currentIndex;
+		$currentIndex = self::$currentIndex;
 
 		$this->displayTop();
 
@@ -373,7 +409,9 @@ class AdminPlPost extends AdminTab
 		 * active : allow to toggle status
 		 */
 
-		global $currentIndex, $cookie;
+		global $cookie;                
+                $currentIndex = self::$currentIndex;
+                
 		$currency = new Currency(Configuration::get('PS_CURRENCY_DEFAULT'));
 
 		$id_category = 1; // default categ
@@ -492,6 +530,10 @@ class AdminPlPost extends AdminTab
 	
 	function postProcess()
 	{	
+		if (Tools::getValue('deleteImage') == 1)
+		{
+			$this->deleteImage(Tools::getValue('id_pl_blog_post'));
+		}
 		if (
 		       (
 			       (Tools::getValue('id_pl_blog_category') == null) || 
@@ -499,7 +541,7 @@ class AdminPlPost extends AdminTab
 				)
 				&& Tools::isSubmit('submitAdd'.$this->table))
 		{
-			global $currentIndex;
+			$currentIndex = self::$currentIndex;
 			$urlRedirect = $currentIndex.'&addpl_blog_post&token='.$this->token;
 			
 			echo '
@@ -530,7 +572,7 @@ class AdminPlPost extends AdminTab
 	
 	protected function _displayDeleteLink($token = NULL, $id)
 	{
-	    global $currentIndex;
+	    $currentIndex = self::$currentIndex;
 
 		$_cacheLang['Delete'] = $this->l('Delete');
 		$_cacheLang['DeleteItem'] = $this->l('If you delete this post then all comment of this post will be deleted. Delete item #', __CLASS__, TRUE, FALSE);
@@ -539,5 +581,27 @@ class AdminPlPost extends AdminTab
 			<a href="'.$currentIndex.'&'.$this->identifier.'='.$id.'&delete'.$this->table.'&token='.($token!=NULL ? $token : $this->token).'" onclick="return confirm(\''.$_cacheLang['DeleteItem'].$id.' ?'.
     				(!is_null($this->specificConfirmDelete) ? '\r'.$this->specificConfirmDelete : '').'\');">
 			<img src="../img/admin/delete.gif" alt="'.$_cacheLang['Delete'].'" title="'.$_cacheLang['Delete'].'" /></a>';
+	}
+
+	public function deleteImage($id_image)
+	{
+		$image = dirname(__FILE__) . '/images/'.$id_image.'.jpg';
+		if (file_exists($image))
+			unlink($image);
+		return true;
+	}
+
+	public function afterImageUpload()
+	{
+		/* Generate image with differents size */
+		if (($id_pl_blog_post = (int)(Tools::getValue('id_pl_blog_post'))) AND isset($_FILES) AND count($_FILES) AND file_exists(dirname(__FILE__) . '/images/'.$id_image.'.jpg'))
+		{
+			$imagesTypes = ImageType::getImagesTypes('suppliers');
+			foreach ($imagesTypes AS $k => $imageType)
+			{
+				$file = dirname(__FILE__) . '/images/'.$id_image.'.jpg';
+				imageResize($file, _PS_SUPP_IMG_DIR_.$id_pl_blog_post.'-'.stripslashes($imageType['name']).'.jpg', (int)($imageType['width']), (int)($imageType['height']));
+			}
+		}
 	}
 }
