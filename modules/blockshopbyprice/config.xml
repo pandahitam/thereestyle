@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <module>
+            <name>blockshopbyprice</name>
+            <displayName><![CDATA[Shop by price block]]></displayName>
+            <version><![CDATA[1.44]]></version>
+            <description><![CDATA[Adds a block listing products by price]]></description>
+            <author><![CDATA[]]></author>
+            <tab><![CDATA[Blocks]]></tab>
+	<confirmUninstall>Uninstalling this will delete any price ranges you set up in this module. It might be worth making a note of them before uninstalling. Pressing OK will uninstall the module or pressing Cancel will leave it installed</confirmUninstall>
+            <is_configurable>1</is_configurable>
+            <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+        </module>
