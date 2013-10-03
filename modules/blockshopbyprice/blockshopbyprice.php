@@ -37,9 +37,9 @@ class Blockshopbyprice extends Module
         function hookRightColumn($params)
         {
             $db = Db::getInstance(); // create and object to represent the database
-            $result = $db->Execute("SELECT `minprice`, `maxprice` FROM `"._DB_PREFIX_."shopbyprice` ORDER BY `displayorder`"); //retrieve price ranges
-            while ($row = mysql_fetch_assoc($result))
-                $results[] = $row;
+            $results = $db->ExecuteS("SELECT `minprice`, `maxprice` FROM `"._DB_PREFIX_."shopbyprice` ORDER BY `displayorder`"); //retrieve price ranges
+            // while ($row = mysql_fetch_assoc($result))
+                // $results[] = $row;
             if (empty($results)){$results = 0;} ; // if no results then set $results to 0s
             global $cookie;
 	    global $smarty;
@@ -48,6 +48,9 @@ class Blockshopbyprice extends Module
             // find category
             $id_category = (int)(Tools::getValue('id_category', 1));
 
+			// var_dump($results);
+			// die;
+			
             $smarty->assign(array(
                 'currencysign' => $currency["sign"],
                 'pricerange' => $results,
