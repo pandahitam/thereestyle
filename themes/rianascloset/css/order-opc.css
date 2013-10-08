@@ -82,6 +82,7 @@
 
 /* carrier */
 #carrier_area { float: left; width: 470px; }
-.delivery_option.item input.delivery_option_radio { vertical-align: top; }
-.delivery_option.item label { display: inline-block; }
+.delivery_option input.delivery_option_radio { vertical-align: top; }
+.delivery_option label { display: inline-block; }
+.delivery_option .resume td { padding-right: 5px; vertical-align: top; }
 #carrier_area input, #carrier_area textarea, #carrier_area select, #carrier_area span.editable { margin-left: 0; }
