@@ -736,7 +736,7 @@ img.icon { margin-right: 0.5em; vertical-align: middle }
 .breadcrumb .navigation_page{color: #9B78EE;}
 
 /* pagination.tpl */
-div.pagination { /*padding: 1.5em 0 0 0; *float:right;*/  }
+div.pagination { float: right; }
 ul.pagination {
 	list-style: none;
 	float: left
@@ -2380,13 +2380,6 @@ table#cart_summary{width:auto;}
 /* homepage */
 
 /* product-list.tpl */
-ul#product_list { 
-	float: left;
-    list-style-type: none;
-    margin-top: 2em;
-	width: 100%;
-	margin-bottom: 10px;
-}
 ul#product_list li {
 	/*background: #d0d3d8 url('../img/block_category_item_bg.jpg') repeat-x;*/
 	/*border: solid 1px #d0d3d8;*/

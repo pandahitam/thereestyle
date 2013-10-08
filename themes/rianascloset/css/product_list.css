@@ -2,7 +2,7 @@
 ul#product_list { 
 	float: left;
     list-style-type: none;
-    margin-top: 2em;
+    margin-top: 1em;
 	width: 100%;
 	margin-bottom: 10px;
 }
@@ -22,7 +22,7 @@ ul#product_list li {
 	height: auto;
 	margin-bottom: 40px;
 	max-width: 240px;
-	float: right;
+	float: left;
 }
 ul#product_list li:nth-child(4n+4){
 	margin-right: 0;
@@ -109,7 +109,7 @@ ul#product_list li p.compare input { vertical-align: text-bottom; margin-left: 0
 p.compare{padding-left: 0 !important; }
 #productsSortForm label{margin-top: 5px;}
 #desainercollection {
-	float: right;
+	float: left;
 }
 #desainercollection .collection {
 	font-size: 14px;

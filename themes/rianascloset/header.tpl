@@ -83,7 +83,7 @@
 				<div id="header_right">
 				{*add by rocanowi - utk search, pilih bahasa, dan pilih currency*}
 					<div id="search_block_top">
-						<form id="searchbox" action="http://www.rianascloset.com/search.php" method="get">
+						<form id="searchbox" action="{$link->getPageLink('search')|escape:'html'}" method="get">
 							<p>
 							<label for="search_query_top"></label>
 							<input type="hidden" value="position" name="orderby">
