@@ -1,0 +1,18 @@
+
+.pslideshow, .pslideshow li img, .pslideshow li, .pslideshow li a{ margin: 0; padding: 0; border: 0; }
+.pslideshow li { overflow: hidden; position: relative; }
+.pslideshow li h3{ margin:0 0 0 5px; color: #ffffff; font-size:12px; }
+.pslideshow li h3 a{ color: #ffffff; text-decoration:none; }
+.pslideshow li .overlay { position:absolute; left:0px; bottom:0px; width:100%; padding:10px 0 10px 0; background:rgb(0,0,0); background:rgba(0,0,0,.6); }
+
+.bx-wrapper .bx-next { position:absolute; top:40%; right:10px; z-index:999; width: 30px; height: 30px; text-indent: -999999px; background: url(bx_styles/gray_next.png) no-repeat 0 -30px; }
+.bx-wrapper .bx-prev { position:absolute; top:40%; left:10px; z-index:999; width: 30px; height: 30px; text-indent: -999999px; background: url(bx_styles/gray_prev.png) no-repeat 0 -30px; }
+.bx-wrapper .bx-pager a { margin-right: 5px; color: #fff; padding: 3px 8px 3px 6px; font-size: 12px; zoom:1; background: url(bx_styles/gray_pager.png) no-repeat 0 -20px; text-decoration: none; }
+.bx-wrapper .bx-auto .start { background: url(bx_styles/gray_auto.png) no-repeat 0 2px; padding-left: 13px; }
+.bx-wrapper .bx-auto .stop { background: url(bx_styles/gray_auto.png) no-repeat 0 -14px; padding-left: 13px; }
+.bx-wrapper .bx-next:hover, .bx-prev:hover { background-position: 0 0; }
+.bx-wrapper .bx-pager .pager-active, .bx-pager a:hover { background-position: 0 0; }
+.bx-wrapper .bx-pager { text-align:center; padding-top: 7px; padding-bottom: 7px; font-size:12px; color:#666; }
+.bx-wrapper .bx-captions { text-align:center; font-size: 12px; padding: 7px 0; color: #666; }
+.bx-wrapper .bx-auto { text-align: center; padding-top: 15px; }
+.bx-wrapper .bx-auto a { color: #666; font-size: 12px; }

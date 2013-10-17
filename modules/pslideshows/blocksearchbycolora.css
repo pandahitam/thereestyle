@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+
+a.searchcolorbox {
+    float: left;
+	display:block;
+	width: 20px;
+    height: 20px;
+    border: 1px solid #666666;
+    cursor: pointer;
+	opacity: 0.5; filter: alpha(opacity = 50); zoom:1;
+}
+a.searchcolorbox:hover {
+	opacity: 1; filter: alpha(opacity = 100); zoom:1;
+}
+#block_color_search li {
+    display: inline;
+    float: left;
+    margin: 0 0.4em 0.4em 0;
+	padding:0px;
+}
+.block_color_filter {
+	position:relative;
+	float:left;
+}
+#block_color_search {
+	display:block;
+	overflow:auto;
+}
