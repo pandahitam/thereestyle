@@ -39,30 +39,29 @@
 				<div id="topfooter" class=" clearfix">
 					<div class="span-1">
 						<ul>
-							   <li><a href="#">About The Ree Style</a></li>
-							   <li><a href="http://www.rianascloset.com/en/contact-us">Contact Us </a></li>
-							   <li><a href="#">Press</a></li>
-							   <li><a href="#">Request Catalog</a></li>
-							   <li><a href="#">Membership Cards</a></li>
-						   
+								<li><a href="{$link->getCMSLink('6')}">About The Ree Style</a></li>
+								<li><a href="{$link->getPageLink('Contact')}">Contact Us </a></li>
+								<li><a href="{$link->getCMSLink('9')}">Press</a></li>
+								<li><a href="{$link->getCMSLink('10')}">Request Catalog</a></li>
+								<li><a href="{$link->getCMSLink('11')}">Membership Cards</a></li>
 						</ul>  
 					</div>
 					<div class="span-2">
 						<ul>
-							   <li><a href="#">Help & FAQ</a></li>
-							   <li><a href="#">How To Order</a></li>
-							   <li><a href="#">Shipping Policy</a></li>
-							   <li><a href="#">Size Guide</a></li>
-							   <li><a href="#">Return & Exchange</a></li>
+							   <li><a href="{$link->getCMSLink('12')}">Help & FAQ</a></li>
+							   <li><a href="{$link->getCMSLink('13')}">How To Order</a></li>
+							   <li><a href="{$link->getCMSLink('14')}">Shipping Policy</a></li>
+							   <li><a href="{$link->getCMSLink('19')}">Size Guide</a></li>
+							   <li><a href="{$link->getCMSLink('20')}">Return & Exchange</a></li>
 						   
 						</ul>  
 					</div>
 					<div class="span-3">
 						<ul>
-							<li><a href="#">Become Reseller</a></li>
-							<li><a href="#">Free Shipping</a></li>
-							<li><a href="#">Careers</a></li>
-							<li><a href="#">Sitemap</a></li>    
+							<li><a href="{$link->getCMSLink('21')}">Become Reseller</a></li>
+							<li><a href="{$link->getCMSLink('22')}">Free Shipping</a></li>
+							<li><a href="{$link->getCMSLink('23')}">Careers</a></li>
+							<li><a href="{$link->getCMSLink('24')}">Sitemap</a></li>    
 						</ul>  
 					</div>
 					<div class="newsletter">

@@ -42,14 +42,20 @@
 			{/strip}
 		</h1>
 		
+		{displaySlideshow id=1}
+		
 		<div id="pslideshow_2_1">
 			<ul class="pslideshow">
 				<li>
-					<img src="http://www.thereestyle.com/img/pslideshows/1/4.jpg" width="768" height="162" alt="Fashion Trend 2013" />
+					<img src="http://beta.thereestyle.com/img/pslideshows/1/6.jpg" width="768" height="239" alt="Fashion Trend 2013" />
 					<div class="overlay"><h3>Fashion Trend 2013</h3></div>
 				</li>
 				<li>
-					<img src="http://www.thereestyle.com/img/pslideshows/1/5.jpg" width="768" height="162" alt="Fashion Best Trend 2013" />
+					<img src="http://beta.thereestyle.com/img/pslideshows/1/7.jpg" width="768" height="239" alt="Fashion Best Trend 2013" />
+					<div class="overlay"><h3>Fashion Best Trend 2013</h3></div>
+				</li>
+				<li>
+					<img src="http://beta.thereestyle.com/img/pslideshows/1/8.jpg" width="768" height="239" alt="Fashion Best Trend 2013" />
 					<div class="overlay"><h3>Fashion Best Trend 2013</h3></div>
 				</li>
 			</ul>

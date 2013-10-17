@@ -1,12 +1,10 @@
 <?php
 
 class Blockshopbyprice extends Module
-
-
 {
-      private $_html;
+	private $_html;
 
-       function __construct()
+	function __construct()
  	{
  	 	$this->name = 'blockshopbyprice';
  	 	$this->tab = 'Blocks';
@@ -26,39 +24,39 @@ class Blockshopbyprice extends Module
 		return true;
 	}
 
-        public function uninstall()
-        {
-        if (!parent::uninstall()
-            OR !Db::getInstance()->Execute('DROP TABLE `'._DB_PREFIX_.'shopbyprice`;'))
-            return false;
-        return true;
+	public function uninstall()
+	{
+		if (!parent::uninstall()
+			OR !Db::getInstance()->Execute('DROP TABLE `'._DB_PREFIX_.'shopbyprice`;'))
+			return false;
+		return true;
 	}
 
-        function hookRightColumn($params)
-        {
-            $db = Db::getInstance(); // create and object to represent the database
-            $results = $db->ExecuteS("SELECT `minprice`, `maxprice` FROM `"._DB_PREFIX_."shopbyprice` ORDER BY `displayorder`"); //retrieve price ranges
-            // while ($row = mysql_fetch_assoc($result))
-                // $results[] = $row;
-            if (empty($results)){$results = 0;} ; // if no results then set $results to 0s
-            global $cookie;
-	    global $smarty;
-            $currency = Currency::getCurrency(intval($cookie->id_currency));
+	function hookRightColumn($params)
+	{
+		$db = Db::getInstance(); // create and object to represent the database
+		$results = $db->ExecuteS("SELECT `minprice`, `maxprice` FROM `"._DB_PREFIX_."shopbyprice` ORDER BY `displayorder`"); //retrieve price ranges
+		// while ($row = mysql_fetch_assoc($result))
+			// $results[] = $row;
+		if (empty($results)){$results = 0;} ; // if no results then set $results to 0s
+		global $cookie;
+		global $smarty;
+		
+		$currency = Currency::getCurrency(intval($cookie->id_currency));
 
-            // find category
-            $id_category = (int)(Tools::getValue('id_category', 1));
+		// find category
+		$id_category = (int)(Tools::getValue('id_category', 1));
 
-			// var_dump($results);
-			// die;
-			
-            $smarty->assign(array(
-                'currencysign' => $currency["sign"],
-                'pricerange' => $results,
-                'id_category'  => $id_category
-                )
-            );
+		// var_dump($results);
+		// die;
+		
+		$smarty->assign(array(
+			'currencysign' => $currency["sign"],
+			'pricerange' => $results,
+			'id_category'  => $id_category
+			));
 
-            return $this->display(__FILE__, 'blockshopbyprice.tpl');
+		return $this->display(__FILE__, 'blockshopbyprice.tpl');
 	}
 
 	function hookLeftColumn($params)
@@ -100,11 +98,10 @@ class Blockshopbyprice extends Module
       
         public function _Priceranges()
         {
-
-             $priceranges = Db::getInstance()->Execute('
-             SELECT * FROM `'._DB_PREFIX_.'shopbyprice`
-             ORDER BY displayorder ASC
-             ');
+			$priceranges = Db::getInstance()->ExecuteS('
+				SELECT * FROM `'._DB_PREFIX_.'shopbyprice`
+				ORDER BY displayorder ASC
+			');
 
          $this->_html .='
          <script language = "javascript">
@@ -121,7 +118,7 @@ class Blockshopbyprice extends Module
          }
          </script>';
 
-             $this->_html .=
+			$this->_html .=
 		'<form action="'.$_SERVER['REQUEST_URI'].'" method="post" name="form1">
 			<fieldset>
 			<legend>'.$this->l('Price Ranges').'</legend>
@@ -131,14 +128,14 @@ class Blockshopbyprice extends Module
                             <th style="color:blue">'.$this->l('Max Price').'</th>
 							<th style="color:blue">'.$this->l('Display Order').'</th>
                            </tr>';
-               while ($row = mysql_fetch_row($priceranges))
+               foreach ($priceranges as $row)
                {
                  $this->_html .=
                          '<tr>
-                             <td style="min-width:100px" >'.$row[1].'</td>
-                             <td style="min-width:100px" >'.$row[2].'</td>
-							 <td style="min-width:100px" >'.$row[3].'</td>
-                             <td><INPUT TYPE=checkbox VALUE="'.$row[0].'" NAME="moderate[]"></td>
+                             <td style="min-width:100px" >'.$row['minprice'].'</td>
+                             <td style="min-width:100px" >'.$row['maxprice'].'</td>
+							 <td style="min-width:100px" >'.$row['displayorder'].'</td>
+                             <td><INPUT TYPE=checkbox VALUE="'.$row['id_range'].'" NAME="moderate[]"></td>
                           </tr>';
                }
 		$this->_html .=
@@ -237,17 +234,15 @@ class Blockshopbyprice extends Module
 	 
 		 function chkdisplayOrder()  // function to validate the display Order
          {
-             if (isset($_POST['displayorder']))
-             {
-              $maxprice = $_POST['displayorder'];
-              if (is_numeric($displayorder))
-                  {
+			if (isset($_POST['displayorder']))
+			{
+				$maxprice = $_POST['displayorder'];
+				if (is_numeric($displayorder))
+				{
                    return $displayorder;
-                  }
-              }
+				}
+			}
             $displayorder = "99"; // if it fails validation - then just add the display order as 99
             return $maxprice;
-         }
-
-                
+		}
 }

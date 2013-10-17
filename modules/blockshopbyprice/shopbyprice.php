@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__).'/../../config/config.inc.php');
 require_once(dirname(__FILE__).'/../../header.php');
 
-require_once(dirname(__FILE__).'/../../product-sort.php');
+// require_once(dirname(__FILE__).'/../../product-sort.php');
 
 $errors = array();
 

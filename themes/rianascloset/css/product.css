@@ -86,7 +86,7 @@
 #primary_block #buy_block {
 	/*background: #f1f2f4 url('../img/product-buy-bg.gif') repeat-x top left;*//*removed by rocanowi*/
 	font-size: 1.1em;
-	padding: 0.7em;
+	padding: 0.7em 0;
 	color: #374853;
 	/*border: 1px #d0d3d8 solid;*//*removed by rocanowi*/
 	margin-bottom: 1.5em

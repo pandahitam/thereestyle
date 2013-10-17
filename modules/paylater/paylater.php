@@ -2,7 +2,7 @@
 if (!defined('_PS_VERSION_'))
   exit;
   
-include_once (PS_ADMIN_DIR . '/../../classes/Mail.php');
+include_once (_PS_ADMIN_DIR_ . '/../classes/Mail.php');
 
 class PayLater extends PaymentModule
 {

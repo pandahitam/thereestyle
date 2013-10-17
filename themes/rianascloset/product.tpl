@@ -65,6 +65,21 @@ var productAvailableForOrder = {if (isset($restricted_country_mode) AND $restric
 var productShowPrice = '{if !$PS_CATALOG_MODE}{$product->show_price}{else}0{/if}';
 var productUnitPriceRatio = '{$product->unit_price_ratio}';
 var idDefaultImage = {if isset($cover.id_image_only)}{$cover.id_image_only}{else}0{/if};
+var stock_management = {$stock_management|intval};
+{if !isset($priceDisplayPrecision)}
+	{assign var='priceDisplayPrecision' value=2}
+{/if}
+{if !$priceDisplay || $priceDisplay == 2}
+	{assign var='productPrice' value=$product->getPrice(true, $smarty.const.NULL, $priceDisplayPrecision)}
+	{assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(false, $smarty.const.NULL)}
+{elseif $priceDisplay == 1}
+	{assign var='productPrice' value=$product->getPrice(false, $smarty.const.NULL, $priceDisplayPrecision)}
+	{assign var='productPriceWithoutReduction' value=$product->getPriceWithoutReduct(true, $smarty.const.NULL)}
+{/if}
+
+
+var productPriceWithoutReduction = '{$productPriceWithoutReduction}';
+var productPrice = '{$productPrice}';
 
 // Customizable field
 var img_ps_dir = '{$img_ps_dir}';
@@ -392,6 +407,12 @@ var fieldRequired = '{l s='Please fill in all required fields, then save the cus
 			<div class="clear"></div>
 		</form>
 		{/if}
+		
+		{if $product->description}
+			<!-- full description -->
+			<div id="idTab1" class="rte">{$product->description}</div>
+		{/if}
+		
 		{if $HOOK_EXTRA_RIGHT}{$HOOK_EXTRA_RIGHT}{/if}
 	</div>
 </div>

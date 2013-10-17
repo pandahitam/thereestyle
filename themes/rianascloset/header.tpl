@@ -75,7 +75,7 @@
 		<!-- Header -->
 		<div id="header">
 			<div id="page" class="clearfix">
-				<a id="header_logo" href="{$base_dir}index.html" title="{$shop_name|escape:'htmlall':'UTF-8'}">
+				<a id="header_logo" href="http://thereestyle.com" title="{$shop_name|escape:'htmlall':'UTF-8'}">
 					{*<img class="logo" src="{$img_ps_dir}logo.jpg?{$img_update_time}" alt="{$shop_name|escape:'htmlall':'UTF-8'}" {if $logo_image_width}width="{$logo_image_width}"{/if} {if $logo_image_height}height="{$logo_image_height}" {/if} />*}
 					{*change by rocanowi 20120801*}
 					The Ree Style
