@@ -56,7 +56,7 @@ class PslideshowBlock extends ObjectModel
 		
 		if(!in_array($location,$this->locationValues)) $location = 'anywhere';
 	
-		$result = Db::getInstance()->getRow("SELECT * FROM "._DB_PREFIX_."pslideshow_block s
+		$result = Db::getInstance()->ExecuteS("SELECT * FROM "._DB_PREFIX_."pslideshow_block s
 												WHERE s.`id_pslideshow_block` = ".$this->id." 
 												AND s.`location` = '".$location."'".
 											($active ? " AND s.`active` = 1 " : ""));

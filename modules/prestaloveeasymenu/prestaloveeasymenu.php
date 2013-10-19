@@ -426,6 +426,7 @@ class prestaloveeasymenu extends Module
 		foreach ($pl_menulinks as $pl_menulink) {
 			$countLink++;
 			$li_class = '';
+			$style_class = '';
 			$curentclass = '';
 			
 			// Add class for <li> tag

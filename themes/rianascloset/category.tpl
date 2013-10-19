@@ -42,40 +42,7 @@
 			{/strip}
 		</h1>
 		
-		{displaySlideshow id=1}
-		
-		<div id="pslideshow_2_1">
-			<ul class="pslideshow">
-				<li>
-					<img src="http://beta.thereestyle.com/img/pslideshows/1/6.jpg" width="768" height="239" alt="Fashion Trend 2013" />
-					<div class="overlay"><h3>Fashion Trend 2013</h3></div>
-				</li>
-				<li>
-					<img src="http://beta.thereestyle.com/img/pslideshows/1/7.jpg" width="768" height="239" alt="Fashion Best Trend 2013" />
-					<div class="overlay"><h3>Fashion Best Trend 2013</h3></div>
-				</li>
-				<li>
-					<img src="http://beta.thereestyle.com/img/pslideshows/1/8.jpg" width="768" height="239" alt="Fashion Best Trend 2013" />
-					<div class="overlay"><h3>Fashion Best Trend 2013</h3></div>
-				</li>
-			</ul>
-		</div>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$('#pslideshow_2_1 .pslideshow').bxSlider({
-					 pager:1,
-					 controls:1,
-					 pause:4000,
-					 speed:800,
-					 infiniteLoop:true,
-					 auto:true,
-					 prevText: '',
-					 nextText: '',
-					 randomStart:0,
-					 mode:'horizontal'
-				});	
-			});
-		</script>
+		{displaySlideshow id=2}
 
 		{if $products && !($category->description)}
 			{include file="$tpl_dir./pagination.tpl"}

@@ -183,7 +183,7 @@ class Pslideshows extends Module
 		$hookName = str_replace('hook','',$hookName);
 		$slideshows = PslideshowBlock::getSlideshowsInHook($hookName);
 		
-		$html = '';
+		$html = $conf['position_way'];
 		
 		if(!count($slideshows)) return false;
 		
@@ -236,7 +236,8 @@ class Pslideshows extends Module
 		if($conf['position_way'] != 'tag') return $html;
 		
 		$pathinfo = pathinfo(__FILE__);
-		$page_name = basename($_SERVER['PHP_SELF'], '.'.$pathinfo['extension']);
+		// $page_name = basename($_SERVER['PHP_SELF'], '.'.$pathinfo['extension']);
+		$page_name = Context::getContext()->controller->php_self;
 		$locationPages = array('product','category','cms');
 		
 		if(!isset($params['id']) || !is_numeric($params['id'])) return $html;
@@ -276,11 +277,11 @@ class Pslideshows extends Module
 				$current_id = (int) Tools::getValue('id_cms');	
 			}
 			
-			if(!is_null($current_id) && !in_array($current_id,$slideshowCategories)) return $html;
+			// if(!is_null($current_id) && !in_array($current_id,$slideshowCategories)) return $html;
 		}
 		
 		$images = $slideshow->getImages($cookie->id_lang,true);
-		
+		// $html = count($images);
 		if(!count($images)) return $html;
 		
 		$defaultLanguage = intval(Configuration::get('PS_LANG_DEFAULT'));
@@ -316,12 +317,13 @@ class Pslideshows extends Module
 							  'slideshowHeight' => $height));
 		
 		self::$instance++;
-		return Module::getInstanceByName('Pslideshows')->display(__FILE__, 'slideshow.tpl');
+		// return 'asd';
+		return Module::getInstanceByName('pslideshows')->display(__FILE__, 'slideshow.tpl');
 	} 
 	
 	private function _displayForm()
 	{
-		$values = !empty($_POST) ? Tools::getValue('pref') : array_merge(self::$default_values,self::getConf());
+		$values = !empty($_POST['submitSlideshow']) ? Tools::getValue('pref') : array_merge(self::$default_values,self::getConf());
 		
 		$this->_html .='<form action="'.$_SERVER['REQUEST_URI'].'" method="post">
 					<fieldset>';
