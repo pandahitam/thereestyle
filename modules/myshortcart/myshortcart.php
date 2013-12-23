@@ -52,8 +52,8 @@ class myshortcart extends PaymentModule
     {
         parent::install();
         $this->createMyshortcartTable();
-        $this->registerHook('Payment');  // using displayPayment
-        $this->registerHook('PaymentReturn'); // using displayPayment
+        // $this->registerHook('Payment');  // using displayPayment
+        // $this->registerHook('PaymentReturn'); // using displayPayment
 
     }
 
@@ -63,14 +63,14 @@ class myshortcart extends PaymentModule
         Configuration::deleteByName('MSC_SHARE_KEY');
         Configuration::deleteByName('MSC_PREFIX');
         parent::uninstall();
-        Db::getInstance()->Execute("DROP TABLE `"._DB_PREFIX_."myshortcart`");
+        Db::getInstance()->Execute("DROP TABLE `ps_myshortcart`");
         parent::uninstall();
     }
 
     function createMyShortCartTable()
     {
         $db = Db::getInstance();
-        $query = "CREATE TABLE `"._DB_PREFIX_."myshortcart` (
+        $query = "CREATE TABLE ps_myshortcart` (
             `msc_id` int(11) NOT NULL auto_increment,
             `start_time` datetime NOT NULL default '0000-00-00 00:00:00',
             `finish_time` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -204,7 +204,12 @@ class myshortcart extends PaymentModule
         return $this->_html;
     }
 
-    public function execPayment($cart)
+	/**
+	 * modified by chandra
+	 * parameter $cart diganti jadi $order
+	 * @param $order:Order
+	 */
+    public function execPayment($order)
     {
         if (!$this->active)
             return;
@@ -213,17 +218,19 @@ class myshortcart extends PaymentModule
         global $cookie,$smarty;
 
         $myshortcart = new myshortcart();
-        $cart = new Cart(intval($cookie->id_cart));
-        $address = new Address(intval($cart->id_address_invoice));
+        // $cart = new Cart(intval($order->id_cart));
+        $address = new Address(intval($order->id_address_invoice));
         $country = new Country(intval($address->id_country));
         $state = NULL;
         if ($address->id_state)
             $state = new State(intval($address->id_state));
-        $customer = new Customer(intval($cart->id_customer));
-        $currency_order = new Currency(intval($cart->id_currency));
-        $products = $cart->getProducts();
+        $customer = new Customer(intval($order->id_customer));
+        $currency_order = new Currency(intval($order->id_currency));
+        // $products = $order->getCartProducts();
+		$products = $order->getProducts();
+		// print_r($products);
         
-        $summarydetail = $cart->getSummaryDetails();
+        // $summarydetail = $cart->getSummaryDetails();
        
         
 //        $shipping = new Shipping(intval($cart->id_shipping));
@@ -235,45 +242,55 @@ class myshortcart extends PaymentModule
         // Edit Moh. Machfudh
         foreach($products as $product)
         {
-//            $i = $i + 1;
-//            if($i > 1)
-//            {
-//                $separator = ';';
-//            }
-//            else
-//            {
-//                $separator = '';
-//            }
+			// old
+            // $price_wt = number_format($product['price_wt'],2,'.','');
+            // $total_wt = number_format($product['total_wt'],2,'.','');
+
+            // $basket .= $product['name'] . ',' ;
+            // $basket .= $price_wt . ',' ;
+            // $basket .= $product['cart_quantity'] . ',';
+            // $basket .= $total_wt .';' ;
             
-            $price_wt = number_format($product['price_wt'],2,'.','');
+            $price_wt = number_format($product['product_price_wt'],2,'.','');
             $total_wt = number_format($product['total_wt'],2,'.','');
 
-            $basket .= $product['name'] . ',' ;
+            $basket .= $product['product_name'] . ',' ;
             $basket .= $price_wt . ',' ;
-            $basket .= $product['cart_quantity'] . ',';
+            $basket .= $product['product_quantity'] . ',';
             $basket .= $total_wt .';' ;
             
         }
+		// echo $order->id_cart;
+		// var_dump($products);
+		// echo $basket;
+		// die;
         
-        if ( $summarydetail['total__discounts'] > 0) { 
+		// $total_discounts = $summarydetail['total__discounts']; //old
+		$total_discounts = $order->total_discounts;
+        if ( $total_discounts > 0) { 
             $basket .= 'Total Discount ,';
-            $basket .=  number_format($summarydetail['total__discounts'],2,'.','') . ',';
+            $basket .=  number_format($total_discounts,2,'.','') . ',';
             $basket .=  '1 ,';
-            $basket .=  number_format($summarydetail['total__discounts'],2,'.',''). ';';
+            $basket .=  number_format($total_discounts,2,'.',''). ';';
         }
         
+		// $total_shipping = $summarydetail['total_shipping']; //old
+		$total_shipping = $order->total_shipping;
 //        if ( $shippings > 0) {   
             $basket .= 'Shipping Cost ,';
-            $basket .=  number_format($summarydetail['total_shipping'],2,'.','') . ',';
+            $basket .=  number_format($total_shipping,2,'.','') . ',';
             $basket .=  '1 ,';
-            $basket .=  number_format($summarydetail['total_shipping'],2,'.','');
+            $basket .=  number_format($total_shipping,2,'.','');
 //        }
 
-        $total = number_format(floatval(number_format($cart->getOrderTotal(true, 3), 2, '.', '')),2,'.','');
+		// $order_total = $cart->getOrderTotal(true, 3); //old
+		$order_total = $order->total_paid;
+        $total = number_format(floatval(number_format($order_total, 2, '.', '')),2,'.','');
 
-        $order = new Order($myshortcart->currentOrder);
+        // $order = new Order($myshortcart->currentOrder);
         $hash_pass = Configuration::get('MSC_SHARE_KEY'); // fix this variable
-        $invoice_id = Configuration::get('MSC_PREFIX') . intval($cart->id);
+        // $invoice_id = Configuration::get('MSC_PREFIX') . intval($cart->id);
+        $invoice_id = Configuration::get('MSC_PREFIX') . intval($order->id_cart);
         $words = sha1($total . $hash_pass . $invoice_id);
         $msc_url = "https://apps.myshortcart.com/payment/request-payment/";
 
@@ -300,19 +317,25 @@ class myshortcart extends PaymentModule
     }
 
 
+	/**
+	 * update chandra.my.id (12/23)
+	 */
     function writeMyShortCartOrder($id_order, $amount)
     {
         $date_now = date('Y-m-d H:i:s');
         
         $db = Db::getInstance();
-        //$check_duplicate = $db->Execute('SELECT `msc_id` FROM `ps_myshortcart` WHERE msc_order_id="'.$id_order.'" AND status="Requested"');
+        $check_duplicate = $db->getRow('SELECT `msc_id` FROM `ps_myshortcart` WHERE msc_order_id="'.$id_order.'"');
+		
+		// var_dump($check_duplicate);
+		// die;
         
-        //if ($check_duplicate) {
-        //    $update_duplicate = $db->Execute('UPDATE `ps_myshortcart` SET amount="'.$amount.'" WHERE msc_order_id="'.$id_order.'" AND status="Requested"');
-        //}
-        //else {
+        if ($check_duplicate) {
+           $update_duplicate = $db->Execute('UPDATE `ps_myshortcart` SET amount="'.$amount.'" WHERE msc_order_id="'.$id_order.'" AND status="Requested"');
+        }
+        else {
             $result = $db->Execute('INSERT INTO `ps_myshortcart` (`msc_order_id`, `start_time`,`status`,`amount`) VALUES ("'.$id_order.'","'.$date_now.'","Requested","'.$amount.'")');
-        //}
+        }
 
         return;
     }

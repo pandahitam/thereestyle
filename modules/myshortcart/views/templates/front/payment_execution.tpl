@@ -1,8 +1,6 @@
 {capture name=path}{l s='Shipping' mod='myshorcart'}{/capture}
-{include file="$tpl_dir./breadcrumb.tpl"}
-{include file="$tpl_dir./order-steps.tpl"}
 
-<h2>{l s='Order summary' mod='myshortcart'}</h2>
+<h2>{l s='Payment' mod='myshortcart'}</h2>
 
 {assign var='current_step' value='payment'}
 
@@ -15,20 +13,18 @@
 <form name="order" action="{$msc_url}" method="post">
     <table border="0">
         <tr>
-            <td>{l s='You have chosen to pay by Myshortcart.' mod='myshortcart'}
+            <td>{l s='You have chosen to pay by Credit Card/DOKU Wallet/Virtual Account.' mod='myshortcart'}
                 {l s=' Here is a short summary of your order:' mod='myshortcart'}
                 <br/><br/>
             </td>
         </tr>
         <tr>
-            <td>{l s='The total amount of your order is : ' mod='myshortcart'} {$msc_amount}</td>
+            <td>{l s='The total amount of your order is : ' mod='myshortcart'} {number_format($msc_amount, 2, ',', '.')}</td>
         </tr>
         <tr>
             <td>
                 <br/><br/>
-                {l s='You will be redirected to Myshortcart to complete your payment.' mod='checkout'}
-                <br /><br />
-                <b>{l s='Please confirm your order by clicking \'Submit Order\'' mod='checkout'}.</b>
+                <b>{l s='Please click \'Submit Order\' to proceed to payment page' mod='checkout'}.</b>
             </td>
         </tr>
     </table>
@@ -50,7 +46,6 @@
     <input type=hidden name="BIRTHDATE" value="0000-00-00">
 
     <p class="cart_navigation">
-        <a href="{$base_dir_ssl}order.php?step=3" class="button_large">{l s='Other payment methods' mod='myshortcart'}</a>
         <input type="submit" name="submit" value="{l s='Submit Order' mod='myshortcart'}" class="exclusive_large" />
     </p>
 </form>

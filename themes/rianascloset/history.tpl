@@ -65,6 +65,7 @@
 				</td>
 				<td class="history_detail">
 					<a class="color-myaccount" href="javascript:showOrder(1, {$order.id_order|intval}, '{$link->getPageLink('order-detail', true)|escape:'html'}');">{l s='details'}</a>
+					{*
 					{if isset($opc) && $opc}
 					<a href="{$link->getPageLink('order-opc', true, NULL, "submitReorder&id_order={$order.id_order}")|escape:'html'}" title="{l s='Reorder'}">
 					{else}
@@ -72,6 +73,7 @@
 					{/if}
 						<img src="{$img_dir}arrow_rotate_anticlockwise.png" alt="{l s='Reorder'}" title="{l s='Reorder'}" class="icon" />
 					</a>
+					*}
 				</td>
 			</tr>
 		{/foreach}

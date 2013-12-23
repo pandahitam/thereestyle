@@ -63,6 +63,11 @@ class PaylaterEmail extends Module
 		$carrier = new Carrier($order->id_carrier);
 		$products = $order->getProducts();
 		
+		//DOKU/MSC
+		$msc_payment_link = Tools::getHttpHost(true).__PS_BASE_URI__.'module/myshortcart/payment?id_order='.$orderId;
+		// echo $msc_payment_link;
+		// die;
+		
 		//build email
 		$subject = 'Payment Information';
 		$to = $customer->email;
@@ -71,9 +76,8 @@ class PaylaterEmail extends Module
 		$virtual_product = true;
 		foreach ($products as $key => $product)
 		{
-			// var_dump($product);
-			$price = Product::getPriceStatic((int)$product['id_product'], false, ($product['id_product_attribute'] ? (int)$product['id_product_attribute'] : null), 6, null, false, true, $product['cart_quantity'], false, (int)$order->id_customer, (int)$order->id_cart, (int)$order->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
-			$price_wt = Product::getPriceStatic((int)$product['id_product'], true, ($product['id_product_attribute'] ? (int)$product['id_product_attribute'] : null), 2, null, false, true, $product['cart_quantity'], false, (int)$order->id_customer, (int)$order->id_cart, (int)$order->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
+			$price = Product::getPriceStatic((int)$product['id_product'], false, ($product['product_attribute_id'] ? (int)$product['product_attribute_id'] : null), 6, null, false, true, $product['product_quantity'], false, (int)$order->id_customer, (int)$order->id_cart, (int)$order->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
+			$price_wt = Product::getPriceStatic((int)$product['id_product'], true, ($product['product_attribute_id'] ? (int)$product['product_attribute_id'] : null), 2, null, false, true, $product['product_quantity'], false, (int)$order->id_customer, (int)$order->id_cart, (int)$order->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
 			// $price = $product['total_price_tax_excl']/1;
 			// $price_wt = $product['total_price_tax_incl']/1;
 
@@ -105,7 +109,7 @@ class PaylaterEmail extends Module
 				</tr>';
 			}
 
-			if (!$customization_quantity || (int)$product['cart_quantity'] > $customization_quantity)
+			if (!$customization_quantity || (int)$product['product_quantity'] > $customization_quantity)
 				// echo PS_TAX_EXC.'<br>';
 				// echo Tools::displayPrice(Product::getTaxCalculationMethod((int)$customer->id) == PS_TAX_EXC ? Tools::ps_round($price, 2) : $price_wt, $currency).'<br>';
 				$products_list .=
@@ -121,6 +125,8 @@ class PaylaterEmail extends Module
 			if (!$product['is_virtual'])
 				$virtual_product &= false;
 
+			// var_dump($product);
+			// die;
 		} // end foreach ($products)
 		
 		// echo $products_list;
@@ -174,7 +180,8 @@ class PaylaterEmail extends Module
 			'{total_discounts}' => Tools::displayPrice($order->total_discounts, $currency, false),
 			'{total_shipping}' => Tools::displayPrice($order->total_shipping, $currency, false),
 			'{total_wrapping}' => Tools::displayPrice($order->total_wrapping, $currency, false),
-			'{total_tax_paid}' => Tools::displayPrice(($order->total_products_wt - $order->total_products) + ($order->total_shipping_tax_incl - $order->total_shipping_tax_excl), $currency, false)
+			'{total_tax_paid}' => Tools::displayPrice(($order->total_products_wt - $order->total_products) + ($order->total_shipping_tax_incl - $order->total_shipping_tax_excl), $currency, false),
+			'{msc_payment_link}' => $msc_payment_link,
 		);
 		
 		//send email
