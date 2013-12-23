@@ -1,0 +1,16 @@
+<p>
+   <h3> {l s='Your order on' mod='myshortcart'} <span class="bold">{$shop_name}</span> {l s='is complete.' mod='myshortcart'}</h3>
+	<br />
+    <br />
+	<h3>{l s='You have chosen the MyShortCart Credit Card Transaction method.' mod='myshortcart'}</h3>
+	<br />
+    <br />
+    <h3><span class="bold">{l s='Your order will be sent very soon.' mod='myshortcart'}</span></h3>
+    <br/>
+    <h3>{l s='For any questions or for further information, please contact our' mod='myshortcart'} <a href="{$base_dir_ssl}contact-form.php">{l s='customer support' mod='myshortcart'}</a>.</h3>
+    
+</p>
+<p class="cart_navigation">
+    <a href="{$link->getPageLink('history', true)}" title="{l s='Back to orders'}"><img src="{$img_dir}icon/order.gif" alt="{l s='Back to orders'}" class="icon" /></a>
+    <a href="{$link->getPageLink('history', true)}" title="{l s='Back to orders'}">{l s='Back to orders'}</a>
+</p>
