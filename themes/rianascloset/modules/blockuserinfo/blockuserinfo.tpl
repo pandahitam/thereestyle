@@ -25,7 +25,7 @@
 *}
 
 <!-- Block user information module HEADER -->
-<div id="header_user">
+<div id="header_user" class="clearfix">
 	<p id="header_user_info">
 		{l s='Welcome' mod='blockuserinfo'},
 		{if Context::getContext()->customer->isLogged()}
@@ -35,7 +35,7 @@
 			<a href="{$link->getPageLink('my-account.php', true)}">{l s='Log in' mod='blockuserinfo'}</a>
 		{/if}
 	</p>
-	<ul id="header_nav">
+	<ul id="header_nav" class="clearfix">
 		{if !$PS_CATALOG_MODE}
 		<li id="shopping_cart">
 			<a href="{$link->getPageLink("$order_process.php", true)}" title="{l s='Your Shopping Cart' mod='blockuserinfo'}">{l s='Cart:' mod='blockuserinfo'}</a>
